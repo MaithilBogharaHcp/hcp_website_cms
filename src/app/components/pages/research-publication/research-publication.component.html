@@ -1,0 +1,30 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>
+@if (isEdit) {
+<app-cms-topbar (preview)="changeMode()" [hasChanges]="hasChanges" (publish)="onPublish()"></app-cms-topbar>
+}
+<app-topbar [isSidebar]="isSideBar" [isEdit]="isEdit" (toogleSideBar)="sideBarToogle()" (preview)="changeMode()"
+  (publish)="onPublish()"></app-topbar>
+<p-toast position="top-right"></p-toast>
+
+<div class="main-container">
+  <div class="w-full pt-[80px] flex-1">
+    <div class="px-[22px] p-[14px] text-[24px] font-SfSemiBold">
+      Research and Publications
+    </div>
+    @for (item of reseachPubLayouts; track $index) { @if(item.rp_layout_id ===
+    "4"){
+    <app-layout4 [imageName]="item.rp_image_path" [isEdit]="isEdit" [id]="$index"
+      (getFile)="onFilesSelected($event, $index, item.layout_id)"></app-layout4>
+    } @else{
+    <div class="flex flex-col w-full mt-[22px] px-[22px]">
+      <app-layout2 [imageName1]="item.rp_image_path" [title]="item.rp_title" [description]="item.rp_description"
+        [alt_text]="item.alt_text" [isEdit]="isEdit" [id]="$index"
+        (getFile)="onFilesSelected($event, $index, item.layout_id)" (titleChange)="changeTitle($event,$index)"
+        (descriptionChange)="changeDescription($event,$index)"></app-layout2>
+    </div>
+    } }
+  </div>
+  <app-footer (toTop)="toTop()"></app-footer>
+</div>

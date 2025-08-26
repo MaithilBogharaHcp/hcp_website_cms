@@ -1,0 +1,57 @@
+<div class="flex items-center justify-center w-full mt-[81px] px-[22px]">
+    <div class="max-w-[1000px] w-full">
+        <div class="font-SfBold sm:text-[44px] text-[24px] sm:mb-[54px] mb-[30px]">
+            @if(isEdit){
+            <input type="text" class="w-full border text-black" (change)="CustomTitleText($event)"
+                [(ngModel)]="data.books_name" />
+            }@else{
+            {{ data.books_name }}
+            }
+        </div>
+        <div class="font-SfLight sm:text-[22px] text-[16px] mb-[54px] text-left ">
+            @if(isEdit){
+            <textarea type="text" placeholder="Add Description"
+                class="resize-none w-full border text-black font-SfLight font-normal text-[20px] flex justify-center !m-0 mac-screen-subtext mb-2"
+                (change)="CustomDescriptionText($event)" rows="5" cols="10"
+                [(ngModel)]="data.books_description"></textarea>
+            <app-button *ngIf="isEdit" (btnClick)="AddParaGap()" class="z-10" btnLabel="Add Paragraph Gap">
+            </app-button>
+            }@else{
+            <p [innerHTML]="data.books_description" class=""></p>
+            }
+        </div>
+        <div class="h-full">
+            <div class="mb-[24px]">
+                <div class="font-SfLight sm:text-[22px] text-[16px]">
+                    <p class="">
+                        Year: @if(isEdit){
+                        <input type="text" placeholder="Add year" class="border text-black mb-[10px]"
+                            (change)="CustomYearText($event)" [(ngModel)]="data.books_year" />
+                        }@else{
+                        {{ data.books_year }}
+                        }
+                    </p>
+                    <div class="flex items-start">
+                        <label for="book-image-upload" class="cursor-pointer">
+                            <div class="relative group">
+                                <img *ngIf="data.books_thumbnail"
+                                    [src]="isBase64(data.books_thumbnail) ? data.books_thumbnail : imageUrl + data.books_thumbnail" alt="data image"
+                                    class="aspect-[412/412] w-full object-cover" loading="lazy" />
+                                <div *ngIf="!data.books_thumbnail"
+                                    class="w-[412px] h-[412px] flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+                                    Book Grid Upload Image
+                                </div>
+                                <div
+                                    class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+                                    412 X 412
+                                </div>
+                            </div>
+                            <input type="file" id="book-image-upload" (change)="setImage($event)"
+                                accept="image/*" class="hidden" />
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

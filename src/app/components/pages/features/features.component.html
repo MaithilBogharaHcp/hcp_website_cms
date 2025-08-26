@@ -1,0 +1,36 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>
+@if (isEdit) {
+<app-cms-topbar (preview)="changeMode()" [hasChanges]="hasChanges" (publish)="onPublish()"></app-cms-topbar>
+}
+<app-topbar [isSidebar]="isSideBar" [isEdit]="isEdit" (toogleSideBar)="sideBarToogle()" (preview)="changeMode()"
+  (publish)="onPublish()"></app-topbar>
+<p-toast position="top-right"></p-toast>
+
+<div class="main-container">
+  <div class="w-full flex-1">
+    <div class="px-[22px] p-[14px] text-[24px] font-SfSemiBold">
+      <!-- <span (click)="onClickNavigate('')" class="text-[#727272] cursor-pointer">News & Outreach | </span> -->
+      <span class="text-[#727272]">Features </span>
+    </div>
+    @for (feature of featureLayouts; track $index){
+      <app-layout4 [imageName]="feature.cover" [isEdit]="isEdit" [id]="$index"></app-layout4>
+    <div
+      class="grid lg:md:grid-cols-4 sm:grid-cols-2 grid-cols-1 sm:gap-x-[1.25%] gap-x-[1.145833333333333%] sm:px-[5.20%] sm:py-[81px] p-[22px] w-full"
+    >
+      @for(item of feature.grid; track $index){
+      <div class="col-span-1 row-span-1 w-full h-full group">
+        @if(item.pdf){
+        <a target="_blank" [href]="imageUrl + item.pdf">
+          <app-layout21 [image]="item.image" [description]="item.description" [title]="item.title"></app-layout21>
+        </a>
+        }@else {
+          <app-layout21 [image]="item.image" [description]="item.description" [title]="item.title"></app-layout21>
+        }
+      </div>
+      }
+    </div>
+    }
+    <app-footer (toTop)="toTop()"></app-footer>
+</div>

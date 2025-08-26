@@ -1,0 +1,128 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" [fullScreen]="true">
+    <p style="color: white">Loading...</p>
+</ngx-spinner>
+@if (isEdit) {
+<app-cms-topbar (preview)="changeMode()" [hasChanges]="hasChanges" (publish)="onPublish()"></app-cms-topbar>
+}
+<app-topbar [isSidebar]="isSideBar" [isEdit]="isEdit" (toogleSideBar)="sideBarToogle()" (preview)="changeMode()"
+    (publish)="onPublish()"></app-topbar>
+<p-toast position="top-right"></p-toast>
+<div class="main-container">
+    <div class="w-full flex-1" [ngClass]="{ 'mt-[80px]': !isEdit}">
+        <div class="px-[22px] p-[14px] text-[24px] font-SfSemiBold">
+            <span class="text-[#727272] cursor-pointer">Studios & Studio
+                Support |
+            </span>
+            <span>{{architecStudioLayouts[1].title}}</span>
+        </div>
+        <div class="flex flex-col">
+            <div *ngFor="let architec of architecStudioLayouts; let i = index" class="relative">
+                @if (isEdit) {
+                <div class="flex justify-end gap-[10px] m-[10px] rounded-sm top-0 right-0 absolute text-white z-[1]">
+                    <!-- <button mat-flat-button color="primary"
+                        [ngStyle]="{ 'background-color': '#1976D2','width':'50px','padding':'10px','border-radius':'4px' }"
+                        (mouseenter)="activeHover()" (mouseleave)="inactiveHover()">
+                        <fa-icon [icon]="faUpDown"></fa-icon>
+                    </button> -->
+                    @if(i !== 1){
+                    <button mat-flat-button color="primary"
+                        [ngStyle]="{ 'background-color': '#1976D2','width':'50px','padding':'10px','border-radius':'4px' }"
+                        (click)="openEditLayoutDialog(i)">
+                        <fa-icon [icon]="faPen"></fa-icon>
+                    </button>
+                    }
+                    @if(i !== 0 && i !== 1){
+                    <button mat-flat-button color="primary"
+                        [ngStyle]="{ 'background-color': '#1976D2','width':'50px','padding':'10px','border-radius':'4px' }"
+                        (click)="openDeleteLayoutDialog(i)">
+                        <fa-icon [icon]="faTrash"></fa-icon>
+                    </button>
+                    }
+                    <app-edit-layout [layoutArray]="layoutArray" [isVisible]="isEditLayoutVisible"
+                        (onCLick)="closeEditLayoutDialog()" (selectLayout)="onLayoutReplaceSelected($event)">
+                    </app-edit-layout>
+                    <app-delete-layout [isVisible]="isVisible" (onCLick)="openDeleteLayoutDialog()"
+                        (onDelete)="onLayoutDelete()">
+                    </app-delete-layout>
+                </div>
+                }
+                @if (architec.layoutid
+                === "4") {
+                <div [ngClass]="{ '2xl:mb-[81px] xl:mb-[61px] mb-[40px]': i !== 0}">
+                    <app-layout4 [imageName]="architec.image[0]" [id]="i" [isEdit]="isEdit"
+                        (getFile)="onFilesSelected($event, i, architec.layoutid)"></app-layout4>
+                </div>
+                } @else if (architec.layoutid === "19") {
+                <div>
+                    <app-layout19 [project_name]="architec.title" [description]="architec.description"
+                        (titleChange)="changeTitle($event)" (descriptionChange)="changeDescription($event)"
+                        [isEdit]="isEdit"></app-layout19>
+                </div>
+                } @else if (architec.layoutid === "7") {
+                <div class="2xl:mb-[81px] xl:mb-[61px] mb-[40px]">
+                    <app-layout6 [imageName1]="architec.image[0]" [imageName2]="architec.image[1]"
+                        [imageName3]="architec.image[2]" [id]="i" [isEdit]="isEdit"
+                        (getFile)="onFilesSelectedLayout($event,i, architec.layoutid)"></app-layout6>
+                </div>
+                } @else if (architec.layoutid === "8") {
+                <div class="2xl:mb-[81px] xl:mb-[61px] mb-[40px]">
+                    <app-layout13 [imageName1]="architec.image[0]" [imageName2]="architec.image[1]"
+                        [imageName3]="architec.image[2]" [imageName4]="architec.image[3]" [id]="i" [isEdit]="isEdit"
+                        (getFile)="onFilesSelectedLayout($event,i, architec.layoutid)"></app-layout13>
+                </div>
+                } @else if (architec.layoutid === "9") {
+                <div class="2xl:mb-[81px] xl:mb-[61px] mb-[40px]">
+                    <app-layout15 [imageName1]="architec.image[0]" [imageName2]="architec.image[1]"
+                        [imageName3]="architec.image[2]" [id]="i" [isEdit]="isEdit"
+                        (getFile)="onFilesSelectedLayout($event,i, architec.layoutid)"></app-layout15>
+                </div>
+                } @else if (architec.layoutid === "6") {
+                <div class="2xl:mb-[81px] xl:mb-[61px] mb-[40px]">
+                    <app-layout12 [imageName1]="architec.image[0]" [imageName2]="architec.image[1]"
+                        [imageName3]="architec.image[2]" [id]="i" [isEdit]="isEdit"
+                        (getFile)="onFilesSelectedLayout($event,i, architec.layoutid)"></app-layout12>
+                </div>
+                } @else if (architec.layoutid === "10") {
+                <div class="2xl:mb-[81px] xl:mb-[61px] mb-[40px]">
+                    <app-layout14 [imageName1]="architec.image[0]" [imageName2]="architec.image[1]"
+                        [imageName3]="architec.image[2]" [id]="i" [isEdit]="isEdit"
+                        (getFile)="onFilesSelectedLayout($event,i, architec.layoutid)"></app-layout14>
+                </div>
+                } @else if (architec.layoutid === "15") {
+                <div class="2xl:mb-[81px] xl:mb-[61px] mb-[40px]">
+                    <app-layout17 [imageName1]="architec.image[0]" [imageName2]="architec.image[1]" [id]="i"
+                        [isEdit]="isEdit" (getFile)="onFilesSelectedLayout($event,i, architec.layoutid)"></app-layout17>
+                </div>
+                } @else if (architec.layoutid === "12") {
+                <div class="2xl:mb-[81px] xl:mb-[61px] mb-[40px]">
+                    <app-layout18 [imageName1]="architec.image[0]" [imageName2]="architec.image[1]" [id]="i"
+                        [isEdit]="isEdit" (getFile)="onFilesSelectedLayout($event,i, architec.layoutid)"></app-layout18>
+                </div>
+                }@else if (architec.layoutid === "11") {
+                <div class="2xl:mb-[81px] xl:mb-[61px] mb-[40px]">
+                    <app-layout16 [imageName1]="architec.image[0]" [imageName2]="architec.image[1]" [id]="i"
+                        [isEdit]="isEdit" (getFile)="onFilesSelectedLayout($event,i, architec.layoutid)"></app-layout16>
+                </div>
+                }
+                @else if (architec.layoutid === "32") {
+                <div class="2xl:mb-[81px] xl:mb-[61px] mb-[40px]">
+                    <app-layout31 [autoPlay]="true" [video]="architec.image[0]" [id]="i" [isEdit]="isEdit"
+                        (getFile)="onFilesVideoSelected($event, i, architec.layoutid)"></app-layout31>
+                </div>
+                }
+            </div>
+            @if (isEdit) {
+            <div class="h-[25px] w-full flex justify-end px-[22px] mt-5 mb-[35px]">
+                <button class="bg-[#1565c0] w-[50px] h-[50px] !rounded-full text-white" (click)="openAddLayoutDialog()">
+                    +
+                </button>
+            </div>
+            }
+        </div>
+    </div>
+    @if(!isLoading){
+    <app-footer (toTop)="toTop()"></app-footer>
+    }
+</div>
+<app-layout-dialog [layoutArray]="layoutArray" [isVisible]="isAddLayoutPopupVisible" (onCLick)="openAddLayoutDialog()"
+    (selectLayout)="onLayoutSelected($event)"></app-layout-dialog>

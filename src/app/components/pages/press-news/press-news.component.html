@@ -1,0 +1,92 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>
+@if (isEdit) {
+<app-cms-topbar (preview)="changeMode()" [hasChanges]="hasChanges" (publish)="onPublish()"></app-cms-topbar>
+}
+<app-topbar [isSidebar]="isSideBar" [isEdit]="isEdit" (toogleSideBar)="sideBarToogle()" (preview)="changeMode()"
+  (publish)="onPublish()"></app-topbar>
+<p-toast position="top-right"></p-toast>
+
+<div class="main-container">
+  <div class="w-full flex-1 mb-[40px]">
+    <div class="px-[22px] p-[14px] ">
+      <div class="flex justify-between items-center">
+        <div><span class="text-[#727272] text-[24px] font-SfSemiBold">Weekly News</span></div>
+        <!-- @if(!isSideBar){
+          <div class="flex items-center">
+            <p-button class="latest-news pr-5" (click)="openLatestNews()">Current Week</p-button>
+          <div class="cursor-pointer font-SfRegular font-normal text-[18px] !text-[#6b7280]" (click)="openDatePicker()">Select by Week</div>
+          <mat-form-field>
+            <mat-date-range-input [rangePicker]="picker" [min]="minDate" [max]="maxDate" [dateFilter]="myFilter">
+              <input matStartDate placeholder="Select by week" readonly (click)="openDatePicker()" (dateChange)="onDateChange($event)">
+              <input matEndDate readonly (click)="openDatePicker()">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker">
+              <mat-icon fontIcon="keyboard_arrow_down" class="!text-[#6b7280]" matDatepickerToggleIcon></mat-icon>
+            </mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+        } -->
+      </div>
+    </div>
+    <div class="w-full">
+      <div *ngIf="filteredPressData && filteredPressData.length">
+      <div *ngFor="let item of filteredPressData; let i = index">
+        <div *ngFor="let press of item.data11; let j = index">
+          <ng-container *ngIf="press.layout === '4'">
+            <app-layout4 (getFile)="onFilesSelected($event, j, press.layout)" [id]="j" [isEdit]="isEdit"
+              [imageName]="press.image">
+            </app-layout4>
+          </ng-container>
+          <div class="flex flex-col mt-[50px] px-[22px] relative">
+            @if (isEdit) {
+            @if(j !== 0){
+            <div class="flex justify-end gap-[10px] m-[10px] rounded-sm top-0 right-0 absolute text-white z-[1]">
+              <!-- <button mat-flat-button color="primary"
+                [ngStyle]="{ 'background-color': '#1976D2','width':'50px','padding':'10px','border-radius':'4px' }"
+                (click)="openEditLayoutDialog(j)">
+                <fa-icon [icon]="faPen"></fa-icon>
+              </button> -->
+              <button mat-flat-button color="primary"
+                [ngStyle]="{ 'background-color': '#1976D2','width':'50px','padding':'10px','border-radius':'4px' }"
+                (click)="openDeleteLayoutDialog(j)">
+                <fa-icon [icon]="faTrash"></fa-icon>
+              </button>
+              <app-edit-layout [layoutArray]="layoutArray" [isVisible]="isEditLayoutVisible"
+                (onCLick)="closeEditLayoutDialog()" (selectLayout)="onLayoutReplaceSelected($event)">
+              </app-edit-layout>
+              <app-delete-layout [isVisible]="isVisible" (onCLick)="openDeleteLayoutDialog()"
+                (onDelete)="onLayoutDelete()">
+              </app-delete-layout>
+            </div>
+            }
+            }
+            <ng-container *ngIf="press.layout === '0'">
+              <app-layout33 [id]="j" [isEdit]="isEdit" [imageName1]="press.image" [title]="press.title"
+                [description]="press.description" [news_description2]="press.news_description2" [link]="press.link"
+                (onClick)="onFilesSelectedLayout($event, j, press.layout)"
+                (titleChange)="changeTitle($event,j)"
+                (descriptionChange)="changeDescription($event,j)"
+                (descriptionChange2)="changeDescription2($event,j)"
+                (linkChange)="changeLink($event,j)"
+                ></app-layout33>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  @if (isEdit) {
+  <div class="h-[25px] w-full flex justify-end px-[22px] mt-5 mb-[35px]">
+    <button class="bg-[#1565c0] w-[50px] h-[50px] !rounded-full text-white" (click)="openAddLayoutDialog()">
+      +
+    </button>
+  </div>
+  }
+  <app-footer (toTop)="toTop()"></app-footer>
+</div>
+<app-layout-dialog [layoutArray]="layoutArray" [isVisible]="isAddLayoutPopupVisible" (onCLick)="openAddLayoutDialog()"
+  (selectLayout)="onLayoutSelected($event)"></app-layout-dialog>

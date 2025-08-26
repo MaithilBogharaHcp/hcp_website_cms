@@ -1,0 +1,33 @@
+<div class="px-3 py-0">
+  <div class="font-SfBold text-[22px] mb-[15px] text-center">Others</div>
+  <div class="flex sm:flex-row flex-col w-full gap-[1.5625%] mt-[54px] justify-center px-[11.30%]">
+    @for (item of data; track $index) {
+    <!-- <div class="max-w-[475px] w-full "> -->
+    <div class="col-span-1 row-span-1 w-full h-full group">
+      <a (click)="navigate(item.name)">
+        <img [src]="imageUrl + item.image" loading="lazy" alt="" lazyLoad
+          class="aspect-[475/261] w-full cursor-pointer gradient" />
+      </a>
+      <div class="my-[15px] text-center font-SfLight text-[22px] cursor-pointer capitalize">
+        <a (click)="navigate(item.name)">
+          @if(item.name === "ar_representatives"){
+          <p>Site Representatives</p>
+          }@else if (item.name === "software_support") {
+          <p>Software Support</p>
+          }@else if (item.name === "model_making") {
+          <p>Model Making</p>
+          }
+          @else if (item.name === "project_management") {
+          <p>Project Management</p>
+          }@else if (item.name === "archives") {
+          <p>Archives and Library</p>
+          }
+          @else {
+          <p>{{item.name}}</p>
+          }
+        </a>
+      </div>
+    </div>
+    }
+  </div>
+</div>

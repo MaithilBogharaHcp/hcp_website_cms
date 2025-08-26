@@ -1,0 +1,97 @@
+<div class="xl:flex xl:flex-row flex-col justify-between items-start gap-x-[22px]">
+  <!-- image -->
+  <div class="xl:w-[66.882%] w-full lg:mb-0 mb-[22px]">
+    <label for="{{ id }}" class="cursor-pointer">
+      <div class="relative group">
+        @if(imageName1 && imageName1.startsWith('data:video/mp4') || imageName1.endsWith('.mp4')){
+        <video #videoPlayer1 class="w-full h-auto object-cover" autoplay [attr.autoplay]="true" loop
+          muted>
+          <source [src]="isBase64(imageName1) ? imageName1 : imageUrl + imageName1" type="video/mp4" />
+        </video>
+        }
+        @else{
+        <img [src]="isBase64(imageName1) ? imageName1 : imageUrl + imageName1" alt="" class="w-full h-auto"
+          loading="lazy" lazyLoad />
+        }
+        @if(isEdit) {
+        <div
+          class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[60px] font-bold group-hover:bg-black bg-opacity-25">
+          Video / Image
+        </div>
+        }
+      </div>
+      @if(isEdit){
+      <input type="file" (change)="setImage($event)" accept="image/*, video/mp4"
+        class="hidden absolute inset-0 opacity-0 cursor-pointer" [id]="id" />
+      }
+    </label>
+  </div>
+  <!-- text -->
+  <div class="flex xl:w-[33.117%] w-full h-full justify-center items-center">
+    <div class="h-full w-full lg:px-[5.2%]">
+      @if(isEdit){
+      <div
+        class="text-black !font-SfSemiBold mt-[70px] mb-[20px] !text-[28px] !text-left flex justify-start items-start w-full mac-screen-text">
+        <input type="text" placeholder="Add News Title" class="w-full border text-black"
+          (ngModelChange)="CustomTitleText($event)" [(ngModel)]="title" />
+      </div>
+      }@else{
+      @if(url){
+      <div
+        class="text-black !font-SfSemiBold sm:!mb-[20px] !mb-[25px] !text-[28px] !text-left flex justify-start items-start w-full cursor-pointer mac-screen-text">
+        <a [routerLink]="['/', url]">
+          {{ title }}
+        </a>
+      </div>
+      }@else {
+      <div
+        class="text-black !font-SfSemiBold sm:!mb-[20px] !mb-[25px] !text-[28px] !text-left flex justify-start items-start w-full mac-screen-text">
+        {{ title }}
+      </div>
+      }
+      }
+      @if(isEdit){
+      <p class="text-black font-SfLight font-normal text-[20px] flex justify-center !m-0 mac-screen-subtext">
+        <textarea type="text" placeholder="Add Description"
+          class="resize-none w-full border text-black font-SfLight font-normal text-[20px] flex justify-center !m-0 mac-screen-subtext mb-2"
+          (ngModelChange)="CustomDescriptionText($event)" rows="5" cols="10" [(ngModel)]="description"></textarea>
+      </p>
+      }@else{
+      <p class="text-black font-SfLight font-normal text-[20px] flex justify-center !m-0 mac-screen-subtext">
+        {{ description }}
+      </p>
+      }
+      @if(isEdit){
+      <div class="mt-4">
+        <p class="text-black font-SfLight font-normal text-[18px] flex !m-0 mac-screen-subtext">
+          <input type="text" placeholder="Add News Project Head/Project Lead" class="w-full border text-black"
+            (ngModelChange)="CustomDescriptionText2($event)" [(ngModel)]="news_description2" />
+        </p>
+      </div>
+      }@else{
+      @if(news_description2){
+      <div class="mt-4">
+        <p class="text-black font-SfLight font-normal text-[18px] flex !m-0 mac-screen-subtext">
+          {{news_description2}}
+        </p>
+      </div>
+      }
+      }
+      @if(isEdit){
+      <div class="mt-4">
+        <input type="text" placeholder="Add Link" class="w-full border text-black"
+          (ngModelChange)="CustomLinkText($event)" [(ngModel)]="link" />
+      </div>
+      }@else{
+      @if(link){
+      <div class="mt-4">
+        <a [href]="link" target="_blank"
+          class="text-blue-500 font-SfLight font-normal text-[18px] flex !m-0 mac-screen-subtext">
+          {{link}}
+        </a>
+      </div>
+      }
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>
+@if (isEdit) {
+<app-cms-topbar (preview)="changeMode()" [hasChanges]="hasChanges" (publish)="onPublish()"></app-cms-topbar>
+}
+<app-topbar [isSidebar]="isSideBar" [isEdit]="isEdit" (toogleSideBar)="sideBarToogle()" (preview)="changeMode()"
+  (publish)="onPublish()"></app-topbar>
+<p-toast position="top-right"></p-toast>
+
+<div class="main-container">
+  <div class="w-full flex-1">
+    <div class="px-[22px] p-[14px] text-[24px] font-SfSemiBold w-full">
+      <!-- <span (click)="onClickNavigation('')" class="text-[#727272] cursor-pointer">News & Outreach | </span> -->
+      <span class="text-[#727272]">Exhibitions</span>
+    </div>
+    @for(exibition of exibitionLayout; track $index){
+    <app-layout4 [imageName]="exibition.cover" [isEdit]="isEdit" [id]="$index"></app-layout4>
+    <div
+      class="grid lg:md:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-x-[1.25%] gap-x-[1.145833333333333%] sm:px-[5.20%] sm:py-[81px] p-[22px] w-full columnsGridobe"
+    >
+      @for(item of exibition.grid; track $index){
+        <div class="col-span-1 row-span-1 w-full h-full group">
+        <app-layout22
+          [image]="item.image"
+          [description]="item.description"
+          [title]="item.title"
+          [redirectId]="item.id"
+          (onClick)="onClickNavigate($event)"
+        ></app-layout22>
+      </div>
+      }
+    </div>
+    } 
+    <app-footer (toTop)="toTop()"></app-footer>
+</div>

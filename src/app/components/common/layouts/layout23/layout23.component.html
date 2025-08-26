@@ -1,0 +1,20 @@
+<div class="w-full individual-slider">
+    <p-carousel
+      [value]="data"
+      [numVisible]="1"
+      [numScroll]="1"
+      class="carousel-fullscreen"
+    >
+      <ng-template let-data pTemplate="item">
+        <div>
+          <img
+            [src]="imageUrl + data.image"
+            class="w-full gradient"
+            loading="lazy"
+            lazyLoad
+          />
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+  

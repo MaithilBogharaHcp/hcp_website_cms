@@ -1,0 +1,325 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>
+@if (isEdit) {
+<app-cms-topbar (preview)="changeMode()" [hasChanges]="hasChanges" (publish)="onPublish()"></app-cms-topbar>
+}
+<app-topbar [isSidebar]="isSideBar" [isEdit]="isEdit" (toogleSideBar)="sideBarToogle()" (preview)="changeMode()"
+  (publish)="onPublish()"></app-topbar>
+<p-toast position="top-right"></p-toast>
+
+<div class="h-full w-full" [ngClass]="getGridClass()">
+  <div class="main-container">
+    <div class="w-full pt-[80px] flex-1 ">
+      <a routerLink="/peoples" routerLinkActive="active" (click)="navigateUrl('/peoples')"
+        class="px-[22px] p-[14px] text-[24px] font-SfSemiBold cursor-pointer">
+        <span class="text-[#727272]">People | </span>
+        <span>{{ parentCat }}
+        </span>
+      </a>
+      @if (peopleLayouts[0]['label'] === 'All' && cover_image && selectedPeople === 'All') {
+      <app-layout4 [imageName]="cover_image" [id]="1" (getFile)="onFilesSelected($event, 1, '4')"
+        [isEdit]="isEdit"></app-layout4>
+      }
+      <div
+        class="sticky top-0 z-10 overflow-hidden bg-white flex lg:flex-row flex-col md:justify-between md:items-center gap-[20px] w-full px-[14px] py-[23px] mb-[10px]">
+        <div class="flex md:flex-row h-[40px] items-center relative w-full">
+          <input
+            class="focus:outline-none xl:w-[700px] w-full py-[11px] font-SfRegular text-[18px] h-[40px] placeholder:text-[18px] rounded-full placeholder:text-[#6b7280] placeholder:font-SfRegular pl-[30px]"
+            type="text" placeholder="Search People" [(ngModel)]="peopleName" (input)="filterData()" />
+          <div class="absolute mr-[15px] top-[10px]">
+            <mat-icon fontIcon="search" class="!text-[#6b7280]"></mat-icon>
+          </div>
+        </div>
+        <div class="max-w-[770px] w-full h-[40px] relative">
+          <p-button class="peopleButton mb-[10px] !text-[20px] !font-SfRegular !w-full text-left"
+            (click)="op.toggle($event);">{{selectedPeople}}</p-button>
+          <p-overlayPanel #op [dismissable]="true" class="p-overlaypanel-content">
+            <div class="flex md:flex-row flex-col md:items-center gap-[22px] relative">
+              <ul
+                class="2xl:text-[28] xl:text-[22px] text-[20px] font-SfRegular flex flex-col gap-[12px] font-SfMedium h-full w-full leading-none sidebarmenu-mac-maintext sidebarmenu cursor-pointer">
+                <li class="cursor-pointer menuItem xl:max-w-[300px] lg:max-w-[200px] max-w-[160px] peopleMenuActive"
+                  [ngClass]="{ activePeople: isActive === 1 }">
+                  <a>
+                    <p (mouseenter)="sideMenu(1)" (click)="onDropdownChange('All',op, 'All');"
+                      class="hover:text-[#B10404]">
+                      All
+                    </p>
+                  </a>
+                </li>
+                <li class="cursor-pointer menuItem xl:max-w-[300px] lg:max-w-[200px] max-w-[160px] peopleMenuActive"
+                  [ngClass]="{ activePeople: isActive === 2 }">
+                  <a>
+                    <p (mouseenter)="sideMenu(2)" class="hover:text-[#B10404]"
+                      (click)="onDropdownChange('Practice Management',op, 'Practice Management');">
+                      Practice Management
+                    </p>
+                  </a>
+                  <!-- <ul
+                    class="h-full w-full flex flex-col 2xl:text-[22px] xl:text-[18px] font-SfRegular sidebarmenu-mac-subtext peoplesubmenu mb-10 people-menu-pb">
+                    <li class="hover:text-[#B10404] cursor-pointer">
+                      {{ peopleMenuText[1].practicemanagement.name }}
+                    </li>
+                    @for(item of this.peopleMenuText[1].practicemanagement; track item; let i = $index){
+                    <li class="hover:text-[#B10404] cursor-pointer"
+                      (click)="onDropdownChange(item.name,op, 'Practice Management')">
+                      {{ item.name }}
+                    </li>
+                    }
+                  </ul> -->
+                </li>
+                <li class="cursor-pointer menuItem xl:max-w-[300px] lg:max-w-[200px] max-w-[160px] peopleMenuActive"
+                  [ngClass]="{ activePeople: isActive === 3 }">
+                  <a>
+                    <p (mouseenter)="sideMenu(3)" class="hover:text-[#B10404]">
+                      Architecture Studio
+                    </p>
+                  </a>
+                  <ul
+                    class="h-full w-full flex flex-col 2xl:text-[22px] xl:text-[18px] font-SfRegular sidebarmenu-mac-subtext peoplesubmenu mb-10 people-menu-pb">
+                    <li class="hover:text-[#B10404] cursor-pointer">
+                      {{ peopleMenuText[2].architechStudio.name }}
+                    </li>
+                    @for(item of this.peopleMenuText[2].architechStudio; track item; let i = $index){
+                    <li class="hover:text-[#B10404] cursor-pointer"
+                      (click)="onDropdownChange(item.name,op, 'Architecture Studio')">
+                      {{ item.name }}
+                    </li>
+                    }
+                  </ul>
+                </li>
+                <li class="cursor-pointer menuItem xl:max-w-[300px] lg:max-w-[200px] max-w-[160px] peopleMenuActive"
+                  [ngClass]="{ activePeople: isActive === 4 }">
+                  <a>
+                    <p (mouseenter)="sideMenu(4)" class="hover:text-[#B10404]">
+                      Urbanism Studio
+                    </p>
+                  </a>
+                  <ul
+                    class="h-full w-full flex flex-col 2xl:text-[22px] xl:text-[18px] font-SfRegular sidebarmenu-mac-subtext peoplesubmenu mb-10 people-menu-pb">
+                    <li class="hover:text-[#B10404] cursor-pointer">
+                      {{ peopleMenuText[3].urbanismStudio.name }}
+                    </li>
+                    @for(item of this.peopleMenuText[3].urbanismStudio; track item; let i = $index){
+                    <li class="hover:text-[#B10404] cursor-pointer"
+                      (click)="onDropdownChange(item.name,op,'Urbanism Studio')">
+                      {{ item.name }}
+                    </li>
+                    }
+                  </ul>
+                </li>
+                <li class="cursor-pointer menuItem xl:max-w-[300px] lg:max-w-[200px] max-w-[160px] peopleMenuActive"
+                  [ngClass]="{ activePeople: isActive === 5 }">
+                  <a>
+                    <p (mouseenter)="sideMenu(5)" class="hover:text-[#B10404]">
+                      Studio Support
+                    </p>
+                  </a>
+                  <ul
+                    class="h-full w-full flex flex-col 2xl:text-[22px] xl:text-[18px] font-SfRegular sidebarmenu-mac-subtext peoplesubmenu mb-10 people-menu-pb">
+                    <li class="hover:text-[#B10404] cursor-pointer">
+                      {{ peopleMenuText[4].
+                      studioSupport.name }}
+                    </li>
+                    @for(item of this.peopleMenuText[4].
+                    studioSupport; track item; let i = $index){
+                    <li class="hover:text-[#B10404] cursor-pointer"
+                      (click)="onDropdownChange(item.name,op,'Studio Support')">
+                      {{ item.name }}
+                    </li>
+                    }
+                  </ul>
+                </li>
+                <li class="cursor-pointer menuItem xl:max-w-[300px] lg:max-w-[200px] max-w-[160px] peopleMenuActive"
+                  [ngClass]="{ activePeople: isActive === 6 }">
+                  <a>
+                    <p (mouseenter)="sideMenu(6)" class="hover:text-[#B10404]">
+                      Practice Support
+                    </p>
+                  </a>
+                  <ul
+                    class="h-full w-full flex flex-col 2xl:text-[22px] xl:text-[18px] font-SfRegular sidebarmenu-mac-subtext peoplesubmenu mb-10 people-menu-pb">
+                    <li class="hover:text-[#B10404] cursor-pointer">
+                      {{ peopleMenuText[5].
+                      practiceSupport.name }}
+                    </li>
+                    @for(item of this.peopleMenuText[5].
+                    practiceSupport; track item; let i = $index){
+                    <li class="hover:text-[#B10404] cursor-pointer"
+                      (click)="onDropdownChange(item.name,op,'Practice Support')">
+                      {{ item.name }}
+                    </li>
+                    }
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </p-overlayPanel>
+        </div>
+      </div>
+      <div *ngFor="let people of peopleLayouts; let i = index" class="">
+
+        @if (!ispeopleLoading) {
+        @if(!selectedPeople || !isFilter){
+        @if (selectedPeople === "All" && peopleLayouts[0]['label'] === 'All') {
+        <div class="lg:px-[5.20%] px-[22px] gap-[22px] pb-[22px] w-full text-[22px] font-SfRegular mb-[8px] mt-[68px]">
+          Founder (1933 - 2018)
+        </div>
+        <div
+          class="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-1 lg:px-[5.20%] px-[22px] gap-[22px] pb-[22px] w-full">
+          <app-layout25 [image]="founder_info.bw_image_path" [isEdit]="isEdit"
+            (onClick)="handleData($event,founder_info)" [labledata]="this.selectedPeople"
+            [people_name]="founder_info.name" [designation_name]="founder_info.designation_name"></app-layout25>
+        </div>
+        }
+        <div *ngFor="let item of peopleKeyData; let i = index">
+          <!-- @if(peopleLayouts[0]['label'] === 'Practice Management'){ -->
+          <div *ngIf="item.startsWith('role_')"
+            class="lg:px-[5.20%] px-[22px] gap-[22px] pb-[22px] w-full text-[22px] font-SfRegular mb-[8px] mt-[68px]">
+            <ng-container
+              *ngIf="i === 0 || peopleLayouts[0][peopleKeyData[i]] !== peopleLayouts[0][peopleKeyData[i - 1]]">
+              {{peopleLayouts[0][peopleKeyData[i]]}}
+            </ng-container>
+          </div>
+          <!-- } -->
+
+          <div *ngIf="item.startsWith('row')"
+            class="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-1 lg:px-[5.20%] px-[22px] gap-[22px] pb-[22px] w-full relative">
+            <app-layout25 *ngFor="let founder of people[item]" [isEdit]="isEdit" [image]="founder.bw_image_path"
+              (onClick)="handleData($event,founder)" [people_name]="founder.name" [labledata]="this.selectedPeople"
+              [designation_name]="founder.designation_name"
+              (clickDelete)='clickDelete(founder.people_id,founder.people_page_id)'></app-layout25>
+            @if(isEdit){
+            @if(peopleLayouts[0]['label'] === 'Practice Management'){
+            <div
+              class="w-[326px] h-[326px] bg-gray-300 text-gray-100 flex items-center justify-center text-[200px] cursor-pointer"
+              (click)="openClosePeoplePopup(people[item])">
+              +
+            </div>
+            }
+            }
+          </div>
+        </div>
+        }@else {
+        <!-- <div class="lg:px-[5.20%] px-[22px] gap-[22px] pb-[22px] w-full text-[22px] font-SfRegular">
+          {{selectedPeople}}
+        </div> -->
+        <div *ngFor="let key of objectKeys(filteredData)">
+          <div
+            class="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-1 lg:px-[5.20%] px-[22px] gap-[22px] pb-[22px] w-full ">
+            <app-layout25 *ngFor="let founder of filteredData[key]" [isEdit]="isEdit" [image]="founder.bw_image_path"
+              (onClick)="handleData($event,founder)" [people_name]="founder.name" [labledata]="this.selectedPeople"
+              [designation_name]="founder.designation_name"
+              (clickDelete)='clickDelete(founder.people_id,founder.people_page_id)'></app-layout25>
+            @if(isEdit){
+            @if(!peopleName.length){
+            <div
+              class="w-[326px] h-[326px] bg-gray-300 text-gray-100 flex items-center justify-center text-[200px] cursor-pointer"
+              (click)="openClosePeoplePopup(filteredData[key])">
+              +
+            </div>
+            }
+            }
+          </div>
+        </div>
+        }
+        }@else {
+        <div class="h-[100vh]"></div>
+        }
+      </div>
+
+    </div>
+  </div>
+  <app-footer (toTop)="toTop()"></app-footer>
+</div>
+<!-- @if(showAdditionalContent && data){
+  <div
+    class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-transparent"
+  >
+    <div class="bg-transparent lg:w-[95%] w-full lg:pl-[5.208%]">
+      <div class="flex justify-end items-center">
+        <div
+          class="flex flex-col items-start gap-[54px] bg-white py-8 px-4 sm:p-8 sm:flex-row peopleContent"
+        >
+          <div>
+            <img
+              [src]="imageUrl + data.image_path"
+              alt=""
+              class="lg:aspect-[450/631] w-full"
+            />
+          </div>
+          <div class="max-w-[420px] w-full leading-none">
+            <div class="flex justify-between">
+              <div class="text-[22px] font-SfSemiBold mb-[10px]">
+                {{ data.name }}
+              </div>
+              <div (click)="handleData(data)" class="cursor-pointer">
+                <mat-icon
+                  fontIcon="close"
+                  class="!text-[#6b7280] cursor-pointer"
+                ></mat-icon>
+              </div>
+            </div>
+            <div class="text-[18px] font-SfLight mb-[25px]">
+              {{ data.designation_name }}
+            </div>
+            <div class="text-[20px] font-SfLight text-left">
+              <p [innerHTML]="data.description"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  } -->
+
+
+<div *ngIf="showAdditionalContent && data"
+  class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-transparent">
+  <div class="bg-transparent lg:w-[100%] w-full h-full">
+    <div class="flex justify-end items-center h-full w-full peopleContent lg:bg-transparent bg-white">
+      <div
+        class="flex flex-col items-start xl:mt-[150px] lg:w-[72.75%] w-full h-full py-8 sm:flex-row lg:px-0 px-[22px] bg-white xl:mr-[175px] lg:mr-[50px]">
+        <div class="sm:mr-[54px]">
+          <img [src]="imageUrl + data.image_path" alt="" class="lg:aspect-[450/631] lg:w-[23vw]" />
+        </div>
+        <div class="w-full h-full sm:mt-0 mt-[10px]">
+          <div class="flex justify-between w-full">
+            <div class="text-[22px] font-SfSemiBold leading-none" [innerHTML]="data.name">
+            </div>
+            <div (click)="handleData($event,data)" class="cursor-pointer">
+              <mat-icon fontIcon="close" class="!text-[#6b7280] cursor-pointer"></mat-icon>
+            </div>
+          </div>
+          @if(data.eduction){
+          <div class="text-[18px] font-SfSemiBold leading-none mb-[5px]">
+            {{ data.eduction }}
+          </div>
+          }
+          <div class="text-[18px] font-SfLight mb-[25px] leading-none">
+            {{ data.designation_name }}
+          </div>
+          <div class="text-[18px] font-SfLight text-left peopplePopupDesc">
+            <p [innerHTML]="data.description" class="w-full"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<p-dialog header="Add People" class="addpeople" [modal]="true" [(visible)]="isPeopleVisible"
+  [style]="{ width: '50rem',height:'20rem'}" draggable="false">
+  <div class="flex flex-col justify-between z-0">
+    <div class="people-dropdown">
+      <p class="text-[20px] font-SfSemiBold">People name</p>
+      <p-dropdown [options]="peopleOption" optionLabel="name" placeholder="Select People" [(ngModel)]="selectedPerson"
+        [style]="{ width: '100%' }" class="people-dropdown">
+      </p-dropdown>
+    </div>
+  </div>
+  <div class="flex mt-4 justify-end items-center gap-1">
+    <app-button btnLabel="Add People" (btnClick)="AddPeople()"></app-button>
+  </div>
+</p-dialog>

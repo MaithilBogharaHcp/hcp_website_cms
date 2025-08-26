@@ -1,0 +1,24 @@
+@if(hover){
+<div class="w-full relative cursor-pointer" >
+  <a [routerLink]="redirectId">
+  <img [src]="imageUrl + image" [alt]="image" class="w-full aspect-[557/313] gradient" />
+  <div
+    class="absolute w-full h-full p-[20px] bg-[#fff] bottom-0 text-[18px] font-SfLight opacity-0 hover:duration-300 hover:opacity-[0.96] text-left hover:overflow-y-auto">
+    <div class="h-full" [innerHTML]="description"></div>
+  </div>
+</a>
+</div>
+<div class="pt-[20px] pb-[100px] text-center text-[24px] font-SfRegular" [innerHTML]="title"></div>
+}@else{
+<div class="w-full relative cursor-pointer">
+  <a [routerLink]="redirectId">
+  <img [src]="imageUrl + image" [alt]="image" loading="lazy" lazyLoad class="w-full aspect-[557/313] gradient" />
+</a>
+</div>
+<div>
+  <a [routerLink]="redirectId">
+    <div class="pt-[20px] pb-[100px] text-center text-[24px] font-SfRegular"
+      [innerHTML]="title"></div>
+  </a>
+</div>
+}

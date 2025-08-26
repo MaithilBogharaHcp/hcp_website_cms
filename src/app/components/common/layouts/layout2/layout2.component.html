@@ -1,0 +1,53 @@
+<div class="xl:flex xl:flex-row flex-col justify-between items-center gap-x-[22px]">
+  <!-- image -->
+  <div class="xl:w-[66.882%] w-full lg:mb-0 mb-[22px] gradient">
+    <label for="{{ id }}" class="cursor-pointer">
+      <div class="relative group">
+        @if (imageName1) {
+        <img [src]="isBase64(imageName1) ? imageName1 : imageUrl + imageName1" [alt]="imageUrl + imageName1"
+          class="w-full aspect-[2.398452] cursor-pointer" loading="lazy" lazyLoad />
+        } @else {
+        <div class="h-[1080px] border flex items-center justify-center font-SfRegular text-[16px] font-normal">
+          Upload Image
+        </div>
+        }
+        @if(isEdit){
+        <div
+          class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[60px] font-bold group-hover:bg-black bg-opacity-25">
+          1243 x 517
+        </div>
+        }
+
+      </div>
+      @if(isEdit){
+      <input type="file" (change)="setImage($event)" accept="image/*" [id]="id"
+        class="hidden absolute inset-0 opacity-0 cursor-pointer" />
+      }
+    </label>
+  </div>
+  <!-- text -->
+  <div class="flex xl:w-[33.117%] w-full h-full justify-center items-center">
+    <div class="h-full w-full lg:px-[5.2%]">
+      @if(isEdit){
+      <input type="text"
+        class="text-black !font-SfSemiBold sm:!mb-[20px] !mb-[25px] !text-[28px] !text-left flex justify-start items-start w-full mac-screen-text border"
+        (change)="CustomTitleText($event)" [(ngModel)]="title" />
+      }@else{
+      <div
+        class="text-black !font-SfSemiBold sm:!mb-[20px] !mb-[25px] !text-[28px] !text-left flex justify-start items-start w-full mac-screen-text">
+        {{ title }}
+      </div>
+      }
+      @if(isEdit){
+      <textarea type="text" placeholder="Add Description"
+        class="resize-none w-full border text-black font-SfLight font-normal text-[20px] flex justify-center !m-0 mac-screen-subtext mb-2"
+        (change)="CustomDescriptionText($event)" rows="5" cols="10" [(ngModel)]="description"></textarea>
+      }@else{
+      <p class="text-black font-SfLight font-normal text-[20px] flex justify-center !m-0 mac-screen-subtext">
+        {{ description }}
+      </p>
+      }
+
+    </div>
+  </div>
+</div>

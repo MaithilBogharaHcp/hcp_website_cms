@@ -1,0 +1,53 @@
+@if(!link){
+  <div class="">
+    <div class="w-full relative  cursor-pointer">
+      <img [src]="imageUrl + image" [alt]="image" loading="lazy" lazyLoad class="aspect-[412/412] w-full gradient" />
+      <div
+        class="absolute w-full h-full p-[20px] bg-[#fff] bottom-0 text-[18px] font-SfLight opacity-0 hover:duration-300 hover:opacity-[0.96] text-left hover:overflow-y-auto"
+      >
+        <div class="h-full" [innerHTML]="description"></div>
+      </div>
+    </div>
+    <div class="pt-[20px] pb-[100px] text-center text-[22px] font-SfRegular">
+      {{ title }}
+    </div>
+  </div>
+}@else{
+  <div>
+    <div class="w-full relative  cursor-pointer">
+      <img [src]="imageUrl + image" [alt]="image" loading="lazy" lazyLoad class="aspect-[412/412] w-full gradient" />
+      <div
+        class="absolute w-full h-full p-[20px] bg-[#fff] bottom-0 text-[18px] font-SfLight opacity-0 hover:duration-300 hover:opacity-100 text-left hover:overflow-y-auto"
+      >
+        <div class="h-full" [innerHTML]="description"></div>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- @if(!link){
+<div class="">
+  <div class="w-full relative cursor-pointer">
+    <img [src]="imageUrl + image" [alt]="image" loading="lazy" lazyLoad class="aspect-[412/412] w-full gradient" />
+    <mat-icon class="absolute top-[10px] right-[5px] !z-[9999]" fontIcon="info" (click)="toggleOverlay($event)"></mat-icon>
+    <div class="absolute w-full h-full p-[20px] bg-[#fff] bottom-0 text-[18px] font-SfLight"
+      [ngClass]="{ 'opacity-0': !showOverlay, 'opacity-[0.96] overflow-y-auto': showOverlay }">
+      <div class="h-full" [innerHTML]="description"></div>
+    </div>
+  </div>
+  <div *ngIf="!link" class="pt-[20px] pb-[100px] text-center text-[22px] font-SfRegular">
+    {{ title }}
+  </div>
+</div>
+}@else{
+<div>
+  <div class="w-full relative  cursor-pointer" (click)="onClicknavigate($event)">
+    <img [src]="imageUrl + image" [alt]="image" loading="lazy" lazyLoad class="aspect-[412/412] w-full gradient" />
+    <mat-icon class="absolute top-[10px] right-[5px] !z-[9999]" fontIcon="info" (click)="toggleOverlay($event)"></mat-icon>
+    <div class="absolute w-full h-full p-[20px] bg-[#fff] bottom-0 text-[18px] font-SfLight"
+      [ngClass]="{ 'opacity-0': !showOverlay, 'opacity-[0.96] overflow-y-auto': showOverlay }">
+      <div class="h-full" [innerHTML]="description"></div>
+    </div>
+  </div>
+</div>
+} -->

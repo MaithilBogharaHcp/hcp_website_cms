@@ -1,0 +1,11 @@
+<div class="fixed top-navbar z-[1054] h-[50px] w-full py-[10px] px-[22px] bg-white">
+  <div class="flex justify-between w-full items-center">
+    <div class="font-sans font-bold text-[20px]">HCP WEBSITE CMS</div>
+    <div class="space-x-4">
+      <app-button (btnClick)="navigateToDashboard()" btnLabel="Dashboard"></app-button>
+      <app-button (btnClick)="onPreview()" btnLabel="Preview"></app-button>
+      <app-button [disabled]="!hasChanges" (btnClick)="onPublish()" btnLabel="Publish"></app-button>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

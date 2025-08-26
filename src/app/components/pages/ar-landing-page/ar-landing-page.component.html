@@ -1,0 +1,96 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>
+@if (isEdit) {
+<app-cms-topbar (preview)="changeMode()" [hasChanges]="hasChanges" (publish)="onPublish()"></app-cms-topbar>
+}
+<app-topbar [isSidebar]="isSideBar" [isEdit]="isEdit" (toogleSideBar)="sideBarToogle()" (preview)="changeMode()"
+  (publish)="onPublish()"></app-topbar>
+<p-toast position="top-right"></p-toast>
+<div class="main-container">
+  <div class="w-full flex-1" [ngClass]="{ 'mt-[80px]': !isEdit}">
+    <div class="px-[22px] flex flex-col w-full !overflow-visible">
+      <div class="py-[14px] text-[24px] font-SfSemiBold">
+        <span routerLink="/architecture" routerLinkActive="active" (click)="navigateUrl('/architecture')"
+          class="cursor-pointer">Architecture</span>
+      </div>
+      <div class="flex flex-col customCollageGap" [style.gap]="customGap">
+        @for (item of architectureLayouts; track $index) {
+        <div class="relative">
+          @if (isEdit) {
+          <div class="flex justify-end gap-[10px] m-[10px] rounded-sm top-0 right-0 absolute text-white z-[1]">
+            <!-- <button mat-flat-button color="primary"
+                        [ngStyle]="{ 'background-color': '#1976D2','width':'50px','padding':'10px','border-radius':'4px' }"
+                        (mouseenter)="activeHover()" (mouseleave)="inactiveHover()">
+                        <fa-icon [icon]="faUpDown"></fa-icon>
+                      </button> -->
+            <button mat-flat-button color="primary" [ngStyle]="{
+                'background-color': '#1976D2',
+                width: '50px',
+                padding: '10px',
+                'border-radius': '4px'
+              }" (click)="openEditLayoutDialog($index)">
+              <fa-icon [icon]="faPen"></fa-icon>
+            </button>
+            @if($index !== 0){
+            <button mat-flat-button color="primary" [ngStyle]="{
+                'background-color': '#1976D2',
+                width: '50px',
+                padding: '10px',
+                'border-radius': '4px'
+              }" (click)="openDeleteLayoutDialog($index)">
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+            }
+            <app-edit-layout [layoutArray]="layoutArray" [isVisible]="isEditLayoutVisible"
+              (onCLick)="closeEditLayoutDialog()" (selectLayout)="onLayoutReplaceSelected($event)">
+            </app-edit-layout>
+            <app-delete-layout [isVisible]="isVisible" (onCLick)="openDeleteLayoutDialog()"
+              (onDelete)="onLayoutDelete()">
+            </app-delete-layout>
+          </div>
+          } @if(item.ar_layout_id === "9"){
+          <app-layout9 [imageName1]="item.images[0].ar_image_path" [imageName2]="item.images[1].ar_image_path"
+            [imageName3]="item.images[2].ar_image_path" [imageName4]="item.images[3].ar_image_path"
+            [project_name1]="item.images[0].ar_project_name" [project_name2]="item.images[1].ar_project_name"
+            [project_name3]="item.images[2].ar_project_name" [project_name4]="item.images[3].ar_project_name"
+            [nameOption]="ar" [isEdit]="isEdit" [id]="$index"
+            (getFile)="onFilesSelectedLayout($event, $index, item.layout_id)"
+            (projectNameChange)="changeProject($event, $index, item.layout_id)"></app-layout9>
+          } @else if(item.ar_layout_id === "10"){
+          <app-layout10 [imageName1]="item.images[0].ar_image_path" [imageName2]="item.images[1].ar_image_path"
+            [imageName3]="item.images[2].ar_image_path" [imageName4]="item.images[3].ar_image_path"
+            [project_name1]="item.images[0].ar_project_name" [project_name2]="item.images[1].ar_project_name"
+            [project_name3]="item.images[2].ar_project_name" [project_name4]="item.images[3].ar_project_name"
+            [nameOption]="ar" [isEdit]="isEdit" [id]="$index"
+            (getFile)="onFilesSelectedLayout($event, $index, item.layout_id)"
+            (projectNameChange)="changeProject($event, $index, item.layout_id)"></app-layout10>
+          } @else if(item.ar_layout_id === "11"){
+          <app-layout11 [imageName1]="item.images[0].ar_image_path" [imageName2]="item.images[1].ar_image_path"
+            [project_name1]="item.images[0].ar_project_name" [project_name2]="item.images[1].ar_project_name"
+            [nameOption]="ar" [isEdit]="isEdit" [id]="$index"
+            (getFile)="onFilesSelectedLayout($event, $index, item.layout_id)"
+            (projectNameChange)="changeProject($event, $index, item.layout_id)"></app-layout11>
+          }@else if(item.ar_layout_id === "30") {
+          <app-layout30 [imageName1]="item.images[0].ar_image_path" [imageName2]="item.images[1].ar_image_path"
+            [project_name1]="item.images[0].ar_project_name" [project_name2]="item.images[1].ar_project_name"
+            [nameOption]="ar" [isEdit]="isEdit" [id]="$index"
+            (getFile)="onFilesSelectedLayout($event, $index, item.layout_id)"
+            (projectNameChange)="changeProject($event, $index, item.layout_id)"></app-layout30>
+          }
+        </div>
+        }
+      </div>
+      @if (isEdit) {
+      <div class="h-[25px] w-full flex justify-end px-[22px] mt-5 mb-[35px]">
+        <button class="bg-[#1565c0] w-[50px] h-[50px] !rounded-full text-white" (click)="openAddLayoutDialog()">
+          +
+        </button>
+      </div>
+      }
+    </div>
+  </div>
+  <app-footer (toTop)="toTop()"></app-footer>
+</div>
+<app-layout-dialog [layoutArray]="layoutArray" [isVisible]="isAddLayoutPopupVisible" (onCLick)="openAddLayoutDialog()"
+  (selectLayout)="onLayoutSelected($event)"></app-layout-dialog>

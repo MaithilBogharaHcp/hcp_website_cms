@@ -1,0 +1,53 @@
+<!-- <div>
+  <div class="relative group cursor-pointer"(click)="handleData()">
+    <img [src]="imageUrl + image" [alt]="image" class="aspect-[326/326] w-full gradient" />
+    @if(people_name){
+    <div
+      class="absolute w-full bg-[#ffffffd5] bottom-0 opacity-0 group-hover:duration-300 p-[5px] group-hover:opacity-100 z-[1] !text-opacity-100">
+      <div class="text-[22px] font-SfSemiBold leading-none peopleName" [innerHTML]="people_name">
+      </div>
+      <div class="text-[18px] font-SfLight leading-none">
+        {{ designation_name }}
+      </div>
+    </div>
+    }
+  </div>
+  
+</div> -->
+
+<div>
+  <div class="relative group cursor-pointer" (click)="handleData($event)">
+    @if(isEdit){
+      @if(this.labledata !== 'All'){
+        <div class="flex justify-end gap-[10px] m-[10px] z-[1] rounded-sm top-0 right-0 absolute text-white">
+          <button mat-flat-button color="primary" (click)="handleDelete($event)"
+            [ngStyle]="{ 'background-color': '#1976D2','width':'50px','padding':'10px','border-radius':'4px' }">
+            <fa-icon [icon]="faTrash"></fa-icon>
+          </button>
+        </div>
+      }
+    }
+    <img [src]="imageUrl + image" [alt]="image" class="aspect-[326/326] w-full gradient" />
+
+    <!-- Show content only on larger screens -->
+    <div
+      class="absolute w-full bg-[#ffffffd5] bottom-0 opacity-0 group-hover:duration-300 p-[5px] group-hover:opacity-100 z-[1] !text-opacity-100 lg:block hidden">
+      <div class="text-[22px] font-SfSemiBold leading-none peopleName" [innerHTML]="people_name">
+        <!-- {{ people_name }} -->
+      </div>
+      <div class="text-[18px] font-SfLight leading-none">
+        {{ designation_name }}
+      </div>
+    </div>
+
+    <!-- Directly show content on mobile screens -->
+    <div class="absolute w-full bg-[#ffffffd5] bottom-0 lg:hidden block p-[5px] z-[1] !text-opacity-100">
+      <div class="text-[22px] font-SfSemiBold leading-none peopleName" [innerHTML]="people_name">
+        <!-- {{ people_name }} -->
+      </div>
+      <div class="text-[18px] font-SfLight leading-none">
+        {{ designation_name }}
+      </div>
+    </div>
+  </div>
+</div>

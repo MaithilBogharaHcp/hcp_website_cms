@@ -1,0 +1,107 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>
+@if (isEdit) {
+<app-cms-topbar (preview)="changeMode()" [hasChanges]="hasChanges" (publish)="onPublish()"></app-cms-topbar>
+}
+<app-topbar [isSidebar]="isSideBar" [isEdit]="isEdit" (toogleSideBar)="sideBarToogle()" (preview)="changeMode()"
+  (publish)="onPublish()"></app-topbar>
+<p-toast position="top-right"></p-toast>
+
+<div class="main-container">
+  <div class="w-full flex-1">
+    <div class="px-[22px] p-[14px] text-[24px] font-SfSemiBold pt-[80px]">
+      <span>Contact Us </span>
+    </div>
+    
+    <div class="w-full">
+      <img src="../../../../assets/1.jpg" [alt]="" class="w-full h-full" />
+    </div>
+    <div class="flex items-center justify-center sm:pt-[81px] pt-[22px] lg:px-0 px-[22px]">
+      <div class="sm:w-[760px] w-full">
+        <div class="text-[40px] font-SfBold mb-[24px]">Contact Us</div>
+        <div class="sm:flex block justify-between">
+          <div class="sm:mb-0 mb-[35px]">
+            <div class="mb-[35px] text-[24px] font-SfSemiBold">
+              General Enquiries:
+            </div>
+            <div class="text-[22px] font-SfLight hover:text-[#1C6AC4]"><a href="mailto:hcpahd@hcp.co.in"
+                target="_blank">{{ "hcpahd@hcp.co.in" }}</a></div>
+            <div class="text-[22px] mb-[60px] font-SfLight hover:text-[#1C6AC4]">
+              <a href="tel:+917927550875" target="_blank">Phone: +91 79 275 508 75</a>
+            </div>
+            <!-- <div class="mb-[60px] text-[22px] font-SfLight hover:text-[#1C6AC4]">
+              <a href="tel:+917927552924" target="_blank">Fax: +91 79 275 529 24</a>
+            </div> -->
+            <div class="mb-[35px] text-[24px] font-SfSemiBold">
+              For press, publications<br />
+              and events:
+            </div>
+            <div class="mb-[35px] text-[22px] font-SfLight hover:text-[#1C6AC4]">
+              <a href="mailto:communications@hcp.co.in" target="_blank">{{"communications@hcp.co.in"}}</a>
+            </div>
+            <div class="mb-[35px] text-[24px] font-SfSemiBold">Our Offices</div>
+            <div class="mb-[35px] text-[22px] font-SfLight hover:text-[#1C6AC4]">
+              <a href="https://maps.app.goo.gl/hW6Vo5KhZ45kSzbn8" target="_blank">
+                <strong>Ahmedabad</strong><br />
+                Paritosh<br />
+                Usmanpura 380013
+  
+              </a>
+            </div>
+            <!-- <div class="mb-[35px] text-[22px] font-SfLight hover:text-[#1C6AC4]">
+              <a href="https://www.google.com/maps?q=24,+Shivaji+Housing+Society,+Senapati+Bapat+Road,+Pune+411016"
+                target="_blank">
+                <strong>Pune</strong> <br />
+                24, Shivaji Housing Society<br />
+                Senapati Bapat Road 411016
+  
+              </a>
+            </div> -->
+            <!-- <div class=" mb-[35px] text-[22px] font-SfLight hover:text-[#1C6AC4]">
+              <a class="cursor-pointer" href="https://www.google.com/maps/place/Sam+India+Built+Well+Pvt.+Ltd/@28.6509523,77.3034186,17z/data=!3m1!4b1!4m6!3m5!1s0x390cfb3f6c000001:0x94b6bbe83acebc49!8m2!3d28.6509476!4d77.3059935!16s%2Fg%2F1hcb48t1x?entry=ttu"
+                target="_blank">
+                <strong>New Delhi</strong> <br />
+                Sam India Construction Site, Gate No.1<br />
+                Near Kartavyapath Parking <br />
+                Raksha Bhavan Man Singh Road 110001
+              </a>
+            </div> -->
+            <div class="mb-[35px] text-[22px] font-SfLight hover:text-[#1C6AC4]">
+              <a href="https://www.google.com/maps?q=24,+Shivaji+Housing+Society,+Senapati+Bapat+Road,+Pune+411016"
+                target="_blank">
+                <strong>Pune</strong> <br />
+                Bungalow No. 24, Shivaji Housing Society<br />
+                SB Road Shivajinagar 411016
+              </a>
+            </div>
+            <div class="text-[22px] font-SfLight hover:text-[#1C6AC4]">
+              <a href="https://maps.app.goo.gl/LjYjjWBJQKoXZJ2L7"
+                target="_blank">
+                <strong>Chennai</strong> <br />
+                EA Chambers Tower II<br />
+                Royapettah 600014
+              </a>
+            </div>
+          </div>
+          <div>
+            <div class="mb-[35px] text-[24px] font-SfSemiBold">
+              For student internships<br />
+              and academic support:
+            </div>
+            <div class="mb-[60px] text-[22px] font-SfLight text-[#1C6AC4]">
+              <a routerLink="/student-internships"> Student Internships </a>
+            </div>
+            <div class="mb-[35px] text-[24px] font-SfSemiBold">
+              Vendors, manufacturers<br />
+              and suppliers:
+            </div>
+            <div class="text-[22px] font-SfLight hover:text-[#1C6AC4]"> <a href="mailto:qs@hcp.co.in" target="_blank">{{
+                "qs@hcp.co.in" }}</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-footer (toTop)="toTop()"></app-footer>
+</div>

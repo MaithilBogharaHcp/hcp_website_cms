@@ -1,0 +1,157 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>
+@if (isEdit) {
+<app-cms-topbar (preview)="changeMode()" [hasChanges]="hasChanges" (publish)="onPublish()"></app-cms-topbar>
+}
+<app-topbar [isSidebar]="isSideBar" [isEdit]="isEdit" (toogleSideBar)="sideBarToogle()" (preview)="changeMode()"
+  (publish)="onPublish()"></app-topbar>
+<p-toast position="top-right"></p-toast>
+
+  <div class="main-container">
+    <div class="w-full pt-[80px] flex-1">
+      <div class="px-[22px] p-[14px] text-[24px] font-SfSemiBold">
+        <span class="text-[#727272]">Work Opportunities</span>
+      </div>
+      @for(work of workOppLayouts; track $index){ @for(item of work.cover;track
+      $index){
+      <app-layout4 [imageName]="item.image_path" [isEdit]="isEdit" [id]="$index"></app-layout4>
+      <div>
+        <app-layout29
+          [project_name]="item.title"
+          [description]="item.description"
+        ></app-layout29>
+      </div>
+      }
+      <div
+        class="grid lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-3 grid-cols-1 items-center justify-center gap-[22px] lg:px-[5.20%] px-[22px]"
+      >
+        @for(item of work.grid;track $index){
+        <div>
+          <app-layout28
+            [title]="item.job_role"
+            [description]="item.job_location"
+            [id]="item.id"
+            routername="careers"
+            (onClick)="handleData(item)"
+          ></app-layout28>
+        </div>
+        }
+      </div>
+      }
+    </div>
+    @if(!isLoading){
+      <app-footer (toTop)="toTop()"></app-footer>
+    }
+  </div>
+@if(showAdditionalContent && data){
+<div
+  class="fixed top-1/2 right-0 bg-white lg:w-[58.4895%] w-full px-[3.125%] transform -translate-y-1/2 h-full !overflow-y-scroll"
+>
+  <div class="flex sm:flex-row flex-col items-start gap-[54px] my-[54px]">
+    <div class="w-full ">
+      <div class="flex justify-between">
+        <div class="text-[22px] font-SfSemiBold mb-[10px]">
+          {{ data.job_role }}
+        </div>
+        <div (click)="handleData(data)" class="cursor-pointer">
+          <!-- <img
+            class="h-[24px] cursor-pointer"
+            loading="lazy"
+            lazyLoad
+            src="../../../../assets/Xmark.1024.png"
+            alt=""
+          /> -->
+          <mat-icon
+          fontIcon="close"
+          class="!text-[#6b7280] cursor-pointer"
+        ></mat-icon>
+        </div>
+      </div>
+      @if(data.job_description){
+      <div class="text-[18px] font-SfLight mb-[40px]">
+        {{ data.job_description }}
+      </div>
+      }
+      <div class="text-[20px] font-SfLight text-left ">
+        <div class="mb-[40px]">
+          @if(data.studio_name){
+          <p class="!m-0">Studio | {{ data.studio_name }}</p>
+          } @if(data.job_location){
+          <p class="!m-0">Work Location | {{ data.job_location }}</p>
+          }
+        </div>
+        @if(data.position_summary){
+        <div class="mb-[40px]">
+          <p class="!m-0">Position Summary:</p>
+          <p class="!m-0">
+            {{ data.position_summary }}
+          </p>
+        </div>
+        } @if(data.responsibilities[0] !== ''){
+        <div class="mb-[40px]">
+          <p class="!m-0">Responsibilities:</p>
+          <ul class="ml-[20px] list-disc">
+            @for (responsibilities of data.responsibilities; track $index) {
+            <li>
+              {{ responsibilities }}
+            </li>
+            }
+          </ul>
+        </div>
+        } @if(data.education[0] !== ''){
+        <div class="mb-[40px]">
+          <p class="!m-0">Education:</p>
+          <ul class="ml-[20px] list-disc">
+            @for (education of data.education; track $index) {
+            <li>{{ education }}</li>
+            }
+          </ul>
+        </div>
+        } @if(data.experience[0] !== ''){
+        <div class="mb-[40px]">
+          <p class="!m-0">Experience:</p>
+          <ul class="ml-[20px] list-disc">
+            @for (experience of data.experience; track $index) {
+            <li>{{ experience }}</li>
+            }
+          </ul>
+        </div>
+        }@if(data.knowledge[0] !== ''){
+        <div class="mb-[40px]">
+          <p class="!m-0">knowledge:</p>
+          <ul class="ml-[20px] list-disc">
+            @for (knowledge of data.knowledge; track $index) { @if(knowledge){
+            <li>{{ knowledge }}</li>
+            } }
+          </ul>
+        </div>
+        } @if(data.skills_mandatory[0] !== ''){
+        <div class="mb-[40px]">
+          <p class="!m-0">Skills (Mandatory):</p>
+          <ul class="ml-[20px] list-disc">
+            @for (skills_mandatory of data.skills_mandatory; track $index) {
+            <li>{{ skills_mandatory }}</li>
+            }
+          </ul>
+        </div>
+        } @if(data.skills_perferred[0] !== ''){
+        <div class="mb-[40px]">
+          <p class="!m-0">Skills (Preferred):</p>
+          <ul class="ml-[20px] list-disc">
+            @for (skills_perferred of data.skills_perferred; track $index) {
+            <li>{{ skills_perferred }}</li>
+            }
+          </ul>
+        </div>
+        }
+        <div class="mb-[40px]">
+          <button type="button" class="text-[#b10404]" (click)="navToForm()">
+            Apply
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+}

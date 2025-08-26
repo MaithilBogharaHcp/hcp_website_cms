@@ -1,0 +1,32 @@
+<div
+  class="flex items-center justify-center md:my-[108px] sm:my-[50px] my-[30px]"
+>
+  <div class="max-w-[1000px] w-full lg:p-0 p-3">
+    <div
+      class="font-SfBold sm:text-[44px] text-[24px] sm:mb-[54px] mb-[30px]"
+    >
+    @if(isEdit){
+      <input type="text" class="w-full border text-black" (change)="CustomTitleText($event)" [(ngModel)]="project_name" />
+    }@else{
+      {{ project_name }}
+    }
+    </div>
+      @if(link){
+        <p
+        class="font-SfLight text-[22px] mb-[54px] text-left"
+        [innerHTML]="description + dynamicHtmlContent"
+      ></p>
+      }@else {
+        @if(isEdit){
+          <textarea type="text" placeholder="Add Description"
+          class="resize-none w-full border text-black font-SfLight font-normal text-[20px] flex justify-center !m-0 mac-screen-subtext mb-2"
+          (change)="CustomDescriptionText($event)" rows="5" cols="10" [(ngModel)]="description"></textarea>
+        }@else{
+          <p
+          class="font-SfLight text-[22px] mb-[54px] text-left"
+          [innerHTML]="description"
+        ></p>
+        }
+      }
+  </div>
+</div>

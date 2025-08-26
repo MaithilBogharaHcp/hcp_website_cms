@@ -1,0 +1,30 @@
+<!-- <title>{{ pageTitle }}</title> -->
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>
+@if (isEdit) {
+<app-cms-topbar (preview)="changeMode()" [hasChanges]="hasChanges" (publish)="onPublish()"></app-cms-topbar>
+}
+<app-topbar [isSidebar]="isSideBar" [isEdit]="isEdit" (toogleSideBar)="sideBarToogle()" (preview)="changeMode()"
+  (publish)="onPublish()"></app-topbar>
+<p-toast position="top-right"></p-toast>
+
+<app-cover (onClick)="nextDiv()"></app-cover>
+<div class="main-container">
+  <div class="w-full flex-1">
+    @if (!isSideBar) {
+    <div class="absolute lg:bottom-[100px] bottom-[15px] left-[49%] home-arrow cursor-pointer" (click)="nextDiv()">
+      <mat-icon fontIcon="keyboard_arrow_down" class="!text-[#6b7280] cursor-pointer w-[50px] h-[50px]"></mat-icon>
+    </div>
+    }
+    <div class="px-[22px] flex flex-col gap-[22px] w-full ScrollStopDiv">
+      @for (item of homeLayouts; track $index) { 
+      <app-layout2 [imageName1]="item.image" [title]="item.title" [description]="item.description"
+        [alt_text]="item.alt_text" [isEdit]="isEdit" [id]="$index"
+        (getFile)="onFilesSelected($event, $index, item.layout_id)" (titleChange)="changeTitle($event,$index)"
+        (descriptionChange)="changeDescription($event,$index)"></app-layout2>
+      }
+    </div>
+  </div>
+  <app-footer (toTop)="toTop()"></app-footer>
+</div>

@@ -1,0 +1,1148 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>
+<div class="flex flex-col space-y-10 h-[150vh]">
+  <div class="flex justify-between w-full h-[50px] px-[22px] items-center">
+    <div class="font-sans font-bold text-[20px]">
+      HCP WEBSITE CMS - Dashboard
+    </div>
+    <div class="mt-3">
+      <app-button (btnClick)="logout()" btnLabel="Logout"></app-button>
+    </div>
+  </div>
+
+  <div class="px-[22px] p-4 flex justify-center items-center">
+    <div class="w-[700px] h-full border rounded-md">
+      <div class="card">
+        <p-treeTable [value]="files" [columns]="cols" selectionMode="multiple" [(selection)]="selectedNodes"
+          dataKey="name">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Pages</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+            <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode">
+              <td class="w-full flex justify-between items-center">
+                <div>
+                  <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                  {{ rowData.name }}
+                </div>
+                <div class="flex items-center gap-2">
+                  @if (rowData.type === "EDIT") {
+                  @if(rowData.project_type === 'people'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditPeoplePopup(rowData.project_id)"></p-button>
+                  }
+                  @else if(rowData.project_type === 'exhibition'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditExhibitionsPopup(rowData.project_id)"></p-button>
+                  }
+                  @else if(rowData.project_type === 'features'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditFeaturePopup(rowData.project_id)"></p-button>
+                  }
+                  @else if(rowData.project_type === 'hcp_press'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditHcpPressPopup(rowData.project_id)"></p-button>
+                  }
+                  @else if(rowData.project_type === 'talks-seminars'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditTalkPopup(rowData.project_id)"></p-button>
+                  }
+                  @else if(rowData.project_type === 'books'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="naviagate(rowData.url)"></p-button>
+                  <!-- (onClick)="openCloseEditBooksPopup(rowData.project_id)" -->
+                  }
+                  @else if(rowData.project_type === 'student-internships'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditstuInternPopup(rowData.project_id)"></p-button>
+                  }
+                  @else if(rowData.project_type === 'work_opp'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditworkOppPopup(rowData.project_id)"></p-button>
+                  }
+                  @else if(rowData.project_type === 'brochures'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditBrochuresPopup(rowData.project_id)"></p-button>
+                  }
+                  @else if(rowData.project_type === 'papers'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditPaperPopup(rowData.project_id)"></p-button>
+                  }
+                  @else if(rowData.project_type === 'awards'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditAwardPopup(rowData.project_id)"></p-button>
+                  }
+                  @else if(rowData.project === 'people cover image'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditPeopleCoverPopup()"></p-button>
+                  }
+                  @else if(rowData.project === 'exhibitions cover image'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditexibitionCoverPopup()"></p-button>
+                  }
+                  @else if(rowData.project === 'work opportunities cover image'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditworkOppCoverPopup()"></p-button>
+                  }
+                  @else if(rowData.project === 'features cover image'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditFeatureCoverPopup()"></p-button>
+                  }
+                  @else if(rowData.project === 'HCP in the Press cover image'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditHCPpressCoverPopup()"></p-button>
+                  }
+                  @else if(rowData.project === 'Talks & Seminars cover image'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditTalkAndSeminarCoverPopup()"></p-button>
+                  }
+                  @else if(rowData.project === 'Awards cover image'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditAwardCoverPopup()"></p-button>
+                  }
+                  @else if(rowData.project === 'student internships cover image'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditstuInternCoverPopup()"></p-button>
+                  }
+                  @else if(rowData.project === 'brochures cover image'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditBrochuresCoverPopup()"></p-button>
+                  }
+                  @else if(rowData.project === 'books cover image'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditBookCoverPopup()"></p-button>
+                  }
+                  @else if(rowData.project === 'papers cover image'){
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseEditPaperCoverPopup()"></p-button>
+                  }
+                  @else{
+                  <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                    (onClick)="naviagate(rowData.url)"></p-button>
+                  }
+                  @if(rowData.project_id){
+                  <p-button icon="pi pi-trash" [rounded]="true" [outlined]="true"
+                    (onClick)="deleteProject(rowData)"></p-button>
+                  }
+                  } @else if (rowData.type === "ADD") {
+                  @if(rowData.name.toLowerCase() === 'weekly news'){
+                  <p-button icon="pi pi-plus" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseWeeklyPopup(rowData.name)"></p-button>
+                  }@else if(rowData.name.toLowerCase() === 'people page data'){
+                  <p-button icon="pi pi-plus" [rounded]="true" [outlined]="true"
+                    (onClick)="openClosePeoplePopup(rowData.name)"></p-button>
+                  }
+                  @else if(rowData.name.toLowerCase() === 'exhibitions page data'){
+                  <p-button icon="pi pi-plus" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseExhibitionsPopup(rowData.name)"></p-button>
+                  }
+                  @else if(rowData.name.toLowerCase() === 'features page data'){
+                  <p-button icon="pi pi-plus" [rounded]="true" [outlined]="true"
+                    (onClick)="openClosefeaturesPopup(rowData.name)"></p-button>
+                  }
+                  @else if(rowData.name.toLowerCase() === 'hcp in the press data'){
+                  <p-button icon="pi pi-plus" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseHcpPressPopup(rowData.name)"></p-button>
+                  }
+                  @else if(rowData.name.toLowerCase() === 'talks & seminars data'){
+                  <p-button icon="pi pi-plus" [rounded]="true" [outlined]="true"
+                    (onClick)="openClosetalkSeminarPopup(rowData.name)"></p-button>
+                  }
+                  @else if(rowData.name.toLowerCase() === 'awards'){
+                  <p-button icon="pi pi-plus" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseAwardPopup(rowData.name)"></p-button>
+                  }
+                  @else if(rowData.name.toLowerCase() === 'brochures'){
+                  <p-button icon="pi pi-plus" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseBrochuresPopup(rowData.name)"></p-button>
+                  }
+                  @else if(rowData.name.toLowerCase() === 'papers'){
+                  <p-button icon="pi pi-plus" [rounded]="true" [outlined]="true"
+                    (onClick)="openClosePaperPopup(rowData.name)"></p-button>
+                  }
+                  @else if(rowData.name.toLowerCase() === 'student internships'){
+                  <p-button icon="pi pi-plus" [rounded]="true" [outlined]="true"
+                    (onClick)="openClosestuInternPopup(rowData.name)"></p-button>
+                  }
+                  @else if(rowData.name.toLowerCase() === 'work opportunities'){
+                  <p-button icon="pi pi-plus" [rounded]="true" [outlined]="true"
+                    (onClick)="openCloseworkOppPopup(rowData.name)"></p-button>
+                  }
+                  @else{
+                  <p-button icon="pi pi-plus" [rounded]="true" [outlined]="true"
+                    (onClick)="openClosePopup(rowData.project)"></p-button>
+                  }
+                  }
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-treeTable>
+        <div class="h-[40px] rounded-md w-full bg-[#f9fafb]"></div>
+      </div>
+    </div>
+  </div>
+
+  <p-dialog [header]="'Add ' + labelName" [modal]="true" [(visible)]="isVisible" [style]="{ width: '25rem' }"
+    draggable="false">
+    <div class="space-y-10 h-[80px] flex flex-col justify-between">
+      <p>{{labelName}}</p>
+      <input id="project-name" type="text" pInputText size="small" class="w-full !max-h-[40px]"
+        (input)="chanageProjectName($event)" />
+    </div>
+    <div class="space-y-10 h-[80px] flex flex-col justify-between mt-[10px]">
+      <p-dropdown [options]="layouts" optionLabel="name" placeholder="Select Layout Type" [(ngModel)]="selectedLayout"
+        [style]="{ width: '100%' }" />
+    </div>
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="popUpNavigate('')" btnLabel="OK"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Change Student Internship Cover Image" [modal]="true" [(visible)]="isStuInternCoverImageVisible"
+    [style]="{ width: '40rem' }" draggable="false">
+    <div>
+      <label for="cover-image-upload" class="cursor-pointer">
+        <div class="relative group">
+          <img *ngIf="stuInterncoverImage"
+            [src]="isBase64(stuInterncoverImage) ? stuInterncoverImage : imageUrl + stuInterncoverImage"
+            alt="stuInterncoverImage" class="max-w-[1920px] !w-full max-h-[1080px] !h-full object-cover"
+            loading="lazy" />
+          <div *ngIf="!stuInterncoverImage"
+            class="w-full h-full flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+            Cover Upload Image
+          </div>
+          <div
+            class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+            1920 X 1080
+          </div>
+        </div>
+        <input type="file" id="cover-image-upload" (change)="onFileSelected($event, 'stuIntern_cover_image')"
+          accept="image/*" class="hidden" />
+      </label>
+    </div>
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="coverImageChange('stuIntern_cover_image')" btnLabel="Change Cover Image"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Change Work Opportunities Cover Image" [modal]="true" [(visible)]="isworkoppCoverImageVisible"
+    [style]="{ width: '40rem' }" draggable="false">
+    <div class="mb-3">
+      <p class="text-[20px] font-SfSemiBold">Work Opportunities Title</p>
+      <input id="workopp-title" type="text" placeholder="Add Work Opportunities Title" pInputText size="small"
+        class="w-full" [(ngModel)]="workopp.title" />
+    </div>
+    <div class="mb-3">
+      <p class="text-[20px] font-SfSemiBold">Work Opportunities Description</p>
+      <textarea id="gap-description" rows="2" cols="10" placeholder="Add Work Opportunities Description"
+        class="w-full border" [(ngModel)]="workopp.description"></textarea>
+      <div class="flex gap-2">
+        <app-button (btnClick)="AddLink('work')" class="z-10" btnLabel="Add Link"></app-button>
+        <app-button (btnClick)="AddParaGap()" class="z-10" btnLabel="Add Para Gap"></app-button>
+      </div>
+    </div>
+    <div>
+      <label for="cover-image-upload" class="cursor-pointer">
+        <div class="relative group">
+          <img *ngIf="workopp.image" [src]="isBase64(workopp.image) ? workopp.image : imageUrl + workopp.image"
+            alt="workopp.image" class="max-w-[1920px] !w-full max-h-[1080px] !h-full object-cover" loading="lazy" />
+          <div *ngIf="!workopp.image"
+            class="w-full h-full flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+            Cover Upload Image
+          </div>
+          <div
+            class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+            1920 X 1080
+          </div>
+        </div>
+        <input type="file" id="cover-image-upload" (change)="onFileSelected($event, 'workopp_cover_image')"
+          accept="image/*" class="hidden" />
+      </label>
+    </div>
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="coverImageChange('workopp_cover_image')" btnLabel="Change Cover Image"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Change Book Cover Image" [modal]="true" [(visible)]="isBookCoverImageVisible"
+    [style]="{ width: '40rem' }" draggable="false">
+    <div>
+      <label for="cover-image-upload" class="cursor-pointer">
+        <div class="relative group">
+          <img *ngIf="bookcoverImage" [src]="isBase64(bookcoverImage) ? bookcoverImage : imageUrl + bookcoverImage"
+            alt="bookcoverImage" class="max-w-[1920px] !w-full max-h-[1080px] !h-full object-cover" loading="lazy" />
+          <div *ngIf="!bookcoverImage"
+            class="w-full h-full flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+            Cover Upload Image
+          </div>
+          <div
+            class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+            1920 X 1080
+          </div>
+        </div>
+        <input type="file" id="cover-image-upload" (change)="onFileSelected($event, 'book_cover_image')"
+          accept="image/*" class="hidden" />
+      </label>
+    </div>
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="coverImageChange('book_cover_image')" btnLabel="Change Cover Image"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Change Brochures Cover Image" [modal]="true" [(visible)]="isBrochuresCoverImageVisible"
+    [style]="{ width: '40rem' }" draggable="false">
+    <div>
+      <label for="cover-image-upload" class="cursor-pointer">
+        <div class="relative group">
+          <img *ngIf="brochurescoverImage"
+            [src]="isBase64(brochurescoverImage) ? brochurescoverImage : imageUrl + brochurescoverImage"
+            alt="brochurescoverImage" class="max-w-[1920px] !w-full max-h-[1080px] !h-full object-cover"
+            loading="lazy" />
+          <div *ngIf="!brochurescoverImage"
+            class="w-full h-full flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+            Cover Upload Image
+          </div>
+          <div
+            class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+            1920 X 1080
+          </div>
+        </div>
+        <input type="file" id="cover-image-upload" (change)="onFileSelected($event, 'brochures_cover_image')"
+          accept="image/*" class="hidden" />
+      </label>
+    </div>
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="coverImageChange('brochures_cover_image')" btnLabel="Change Cover Image"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Change Paper Cover Image" [modal]="true" [(visible)]="isPaperCoverImageVisible"
+    [style]="{ width: '40rem' }" draggable="false">
+    <div>
+      <label for="cover-image-upload" class="cursor-pointer">
+        <div class="relative group">
+          <img *ngIf="papercoverImage" [src]="isBase64(papercoverImage) ? papercoverImage : imageUrl + papercoverImage"
+            alt="papercoverImage" class="max-w-[1920px] !w-full max-h-[1080px] !h-full object-cover" loading="lazy" />
+          <div *ngIf="!papercoverImage"
+            class="w-full h-full flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+            Cover Upload Image
+          </div>
+          <div
+            class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+            1920 X 1080
+          </div>
+        </div>
+        <input type="file" id="cover-image-upload" (change)="onFileSelected($event, 'paper_cover_image')"
+          accept="image/*" class="hidden" />
+      </label>
+    </div>
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="coverImageChange('paper_cover_image')" btnLabel="Change Cover Image"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Change People Cover Image" [modal]="true" [(visible)]="isPeopleCoverImageVisible"
+    [style]="{ width: '40rem' }" draggable="false">
+    <div>
+      <label for="cover-image-upload" class="cursor-pointer">
+        <div class="relative group">
+          <img *ngIf="coverImage" [src]="isBase64(coverImage) ? coverImage : imageUrl + coverImage" alt="coverImage"
+            class="max-w-[1920px] !w-full max-h-[1080px] !h-full object-cover" loading="lazy" />
+          <div *ngIf="!coverImage"
+            class="w-full h-full flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+            Cover Upload Image
+          </div>
+          <div
+            class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+            1920 X 1080
+          </div>
+        </div>
+        <input type="file" id="cover-image-upload" (change)="onFileSelected($event, 'peopele_cover_image')"
+          accept="image/*" class="hidden" />
+      </label>
+    </div>
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="coverImageChange('peopele_cover_image')" btnLabel="Change Cover Image"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Change Exibition Cover Image" [modal]="true" [(visible)]="isExibitionCoverImageVisible"
+    [style]="{ width: '40rem' }" draggable="false">
+    <div>
+      <label for="cover-image-upload" class="cursor-pointer">
+        <div class="relative group">
+          <img *ngIf="exibitioncoverImage"
+            [src]="isBase64(exibitioncoverImage) ? exibitioncoverImage : imageUrl + exibitioncoverImage"
+            alt="exibitioncoverImage" class="max-w-[1920px] !w-full max-h-[1080px] !h-full object-cover"
+            loading="lazy" />
+          <div *ngIf="!exibitioncoverImage"
+            class="w-full h-full flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+            Cover Upload Image
+          </div>
+          <div
+            class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+            1920 X 1080
+          </div>
+        </div>
+        <input type="file" id="cover-image-upload" (change)="onFileSelected($event, 'exibition_cover_image')"
+          accept="image/*" class="hidden" />
+      </label>
+    </div>
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="coverImageChange('exibition_cover_image')" btnLabel="Change Cover Image"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Change Feature Cover Image" [modal]="true" [(visible)]="isFeatureCoverImageVisible"
+    [style]="{ width: '40rem' }" draggable="false">
+    <div>
+      <label for="cover-image-upload" class="cursor-pointer">
+        <div class="relative group">
+          <img *ngIf="featurecoverImage"
+            [src]="isBase64(featurecoverImage) ? featurecoverImage : imageUrl + featurecoverImage"
+            alt="featurecoverImage" class="max-w-[1920px] !w-full max-h-[1080px] !h-full object-cover" loading="lazy" />
+          <div *ngIf="!featurecoverImage"
+            class="w-full h-full flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+            Cover Upload Image
+          </div>
+          <div
+            class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+            1920 X 1080
+          </div>
+        </div>
+        <input type="file" id="cover-image-upload" (change)="onFileSelected($event, 'features_cover_image')"
+          accept="image/*" class="hidden" />
+      </label>
+    </div>
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="coverImageChange('features_cover_image')" btnLabel="Change Cover Image"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Change HCP Press Cover Image" [modal]="true" [(visible)]="isHCPpressCoverImageVisible"
+    [style]="{ width: '40rem' }" draggable="false">
+    <div>
+      <label for="cover-image-upload" class="cursor-pointer">
+        <div class="relative group">
+          <img *ngIf="hcppresscoverImage"
+            [src]="isBase64(hcppresscoverImage) ? hcppresscoverImage : imageUrl + hcppresscoverImage"
+            alt="hcppresscoverImage" class="max-w-[1920px] !w-full max-h-[1080px] !h-full object-cover"
+            loading="lazy" />
+          <div *ngIf="!hcppresscoverImage"
+            class="w-full h-full flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+            Cover Upload Image
+          </div>
+          <div
+            class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+            1920 X 1080
+          </div>
+        </div>
+        <input type="file" id="cover-image-upload" (change)="onFileSelected($event, 'hcppress_cover_image')"
+          accept="image/*" class="hidden" />
+      </label>
+    </div>
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="coverImageChange('hcppress_cover_image')" btnLabel="Change Cover Image"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Change Talk & Seminar Cover Image" [modal]="true" [(visible)]="isTalkAndSeminarCoverImageVisible"
+    [style]="{ width: '40rem' }" draggable="false">
+    <div>
+      <label for="cover-image-upload" class="cursor-pointer">
+        <div class="relative group">
+          <img *ngIf="talkandseminarcoverImage"
+            [src]="isBase64(talkandseminarcoverImage) ? talkandseminarcoverImage : imageUrl + talkandseminarcoverImage"
+            alt="talkandseminarcoverImage" class="max-w-[1920px] !w-full max-h-[1080px] !h-full object-cover"
+            loading="lazy" />
+          <div *ngIf="!talkandseminarcoverImage"
+            class="w-full h-full flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+            Cover Upload Image
+          </div>
+          <div
+            class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+            1920 X 1080
+          </div>
+        </div>
+        <input type="file" id="cover-image-upload" (change)="onFileSelected($event, 'talk_cover_image')"
+          accept="image/*" class="hidden" />
+      </label>
+    </div>
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="coverImageChange('talk_cover_image')" btnLabel="Change Cover Image"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Change Award Cover Image" [modal]="true" [(visible)]="isAwardCoverImageVisible"
+    [style]="{ width: '40rem' }" draggable="false">
+    <div>
+      <label for="cover-image-upload" class="cursor-pointer">
+        <div class="relative group">
+          <img *ngIf="awardcoverImage" [src]="isBase64(awardcoverImage) ? awardcoverImage : imageUrl + awardcoverImage"
+            alt="awardcoverImage" class="max-w-[1920px] !w-full max-h-[1080px] !h-full object-cover" loading="lazy" />
+          <div *ngIf="!awardcoverImage"
+            class="w-full h-full flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+            Cover Upload Image
+          </div>
+          <div
+            class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+            1920 X 1080
+          </div>
+        </div>
+        <input type="file" id="cover-image-upload" (change)="onFileSelected($event, 'award_cover_image')"
+          accept="image/*" class="hidden" />
+      </label>
+    </div>
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="coverImageChange('award_cover_image')" btnLabel="Change Cover Image"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Add Week Page" class="addweekdate" [modal]="true" [(visible)]="isWeeklyVisible"
+    [style]="{ width: '30rem'}" draggable="false">
+    <div class="space-y-10 flex flex-col justify-between z-0">
+      <p>Week Date</p>
+      <mat-form-field>
+        <mat-date-range-input [rangePicker]="picker" [min]="minDate" [max]="maxDate" [dateFilter]="myFilter">
+          <input matStartDate placeholder="Select start date" readonly (click)="openDatePicker()"
+            (dateChange)="onDateChange($event)">
+          <input matEndDate readonly placeholder="Select end date" (click)="openDatePicker()"
+            (dateChange)="onDateChange($event)">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+
+    </div>
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="popUpNavigateWeek()" btnLabel="OK"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Add People" class="addpeople" [modal]="true" [(visible)]="isPeopleVisible"
+    [style]="{ width: '70rem'}" draggable="false" (onHide)="clearPersonData()">
+    <div class="flex flex-col justify-between z-0">
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">People Name</p>
+        <input id="people-name" type="text" placeholder="Add People Name" pInputText size="small" class="w-full"
+          [(ngModel)]="person.name" />
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">People Designation</p>
+        <p-dropdown [options]="designationOption" optionLabel="name" placeholder="Select People Designation"
+          [(ngModel)]="person.designation" [style]="{ width: '100%' }" class="people-dropdown">
+        </p-dropdown>
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">People Education</p>
+        <input id="people-education" type="text" placeholder="Add People Eduction" pInputText size="small"
+          class="w-full" [(ngModel)]="person.eduction" />
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">People Description</p>
+        <textarea id="gap-description" rows="5" cols="10" placeholder="Add People Description" class="w-full border"
+          [(ngModel)]="person.description"></textarea>
+        <div> <app-button (btnClick)="AddParaGap()" class="z-10" btnLabel="Add Paragraph Gap"></app-button></div>
+      </div>
+      <div class="flex items-start gap-4">
+        <label for="bw-image-upload" class="cursor-pointer">
+          <div class="relative group">
+            <img *ngIf="person.bw_image_path"
+              [src]="isBase64(person.bw_image_path) ? person.bw_image_path : imageUrl + person.bw_image_path"
+              alt="Black & White Preview" class="aspect-[326/326] w-full object-cover" loading="lazy" />
+            <div *ngIf="!person.bw_image_path"
+              class="w-[450px] h-[450px] border-[2px] border-dashed flex items-center justify-center font-SfRegular text-[20px] text-gray-500">
+              Black & White Upload Image
+            </div>
+            <div
+              class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+              326 X 326
+            </div>
+          </div>
+          <input type="file" id="bw-image-upload" (change)="onFileSelected($event, 'bw_image')" accept="image/*"
+            class="hidden" />
+        </label>
+        <label for="color-image-upload" class="cursor-pointer">
+          <div class="relative group">
+            <img *ngIf="person.image_path"
+              [src]="isBase64(person.image_path) ? person.image_path : imageUrl + person.image_path"
+              alt="Black & White Preview" class="aspect-[450/630] w-full object-cover" loading="lazy" />
+            <div *ngIf="!person.image_path"
+              class="w-[450px] h-[630px] flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+              Color Upload Image
+            </div>
+            <div
+              class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+              450 X 630
+            </div>
+          </div>
+          <input type="file" id="color-image-upload" (change)="onFileSelected($event, 'color_image')" accept="image/*"
+            class="hidden" />
+        </label>
+      </div>
+    </div>
+
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="addPeople()" btnLabel="Add People"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Add Exhibitions" class="addpeople" [modal]="true" [(visible)]="isexhibitionsVisible"
+    [style]="{ width: '70rem'}" draggable="false" (onHide)="clearExhibitionData()">
+    <div class="flex flex-col justify-between z-0">
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Exhibitions Year</p>
+        <p-calendar [readonlyInput]="true" view="year" dateFormat="yy" [(ngModel)]="exhibitions.year"
+          (onSelect)="onYearSelect($event,'exhibitions')" styleClass="max-w-[350px] w-full">
+        </p-calendar>
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Exhibitions Title</p>
+        <input id="exhibitions-title" type="text" placeholder="Add Exhibitions Title" pInputText size="small"
+          class="w-full" [(ngModel)]="exhibitions.title" />
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Exhibitions Description</p>
+        <textarea id="gap-description" rows="5" cols="10" placeholder="Add Exhibitions Description"
+          class="w-full border" [(ngModel)]="exhibitions.description"></textarea>
+        <div> <app-button (btnClick)="AddParaGap()" class="z-10" btnLabel="Add Paragraph Gap"></app-button></div>
+      </div>
+      <div class="flex items-start">
+        <label for="exhibitions-image-upload" class="cursor-pointer">
+          <div class="relative group">
+            <img *ngIf="exhibitions.image"
+              [src]="isBase64(exhibitions.image) ? exhibitions.image : imageUrl + exhibitions.image"
+              alt="exhibitions image" class="aspect-[557/313] w-full object-cover" loading="lazy" />
+            <div *ngIf="!exhibitions.image"
+              class="w-[557px] h-[313px] flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+              Exhibitions Grid Upload Image
+            </div>
+            <div
+              class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+              557 X 313
+            </div>
+          </div>
+          <input type="file" id="exhibitions-image-upload" (change)="onFileSelected($event,'exhibitions_image')"
+            accept="image/*" class="hidden" />
+        </label>
+      </div>
+      <div class="flex items-start mt-3">
+        <label for="exhibitions-details-image-upload" class="cursor-pointer mb-3">
+          <input #sliderImageInput type="file" accept="image/*" class="hidden"
+            (change)="onSliderImageSelected($event)" />
+
+          <input #changeImageInput type="file" accept="image/*" class="hidden" (change)="onChangeSliderImage($event)" />
+
+          <div class="flex items-start mt-3">
+            <app-button (btnClick)="addImage()" btnLabel="Add Exhibitions Details Slider Image"></app-button>
+          </div>
+          <!-- <div class="grid grid-cols-3 gap-4 mt-3" *ngIf="exhibitions.slider?.length"> -->
+          <div *ngFor="let slide of exhibitions.slider; let i = index" class="relative group">
+            <img *ngIf="slide.image" [src]="isBase64(slide.image) ? slide.image : imageUrl + slide.image"
+              class="w-full object-cover rounded border mt-5" />
+            <app-button (click)="openChangeImage(i)" btnLabel="Change Image">
+            </app-button>
+            <!-- </div> -->
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="addExhibitions()" btnLabel="Add Exhibitions"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Add Features" class="addpeople" [modal]="true" [(visible)]="isFeaturesVisible"
+    [style]="{ width: '70rem'}" draggable="false" (onHide)="clearfeaturesData()">
+    <div class="flex flex-col justify-between z-0">
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Features Year</p>
+        <p-calendar [readonlyInput]="true" view="year" dateFormat="yy" [(ngModel)]="features.year"
+          (onSelect)="onYearSelect($event,'features')" styleClass="max-w-[350px] w-full">
+        </p-calendar>
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Features Title</p>
+        <input id="features-title" type="text" placeholder="Add Features Title" pInputText size="small" class="w-full"
+          [(ngModel)]="features.title" />
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Features Description</p>
+        <textarea id="gap-description" rows="5" cols="10" placeholder="Add Features Description" class="w-full border"
+          [(ngModel)]="features.description"></textarea>
+        <div> <app-button (btnClick)="AddParaGap()" class="z-10" btnLabel="Add Paragraph Gap"></app-button></div>
+      </div>
+      <div class="flex items-start">
+        <label for="features-image-upload" class="cursor-pointer">
+          <div class="relative group">
+            <img *ngIf="features.image" [src]="isBase64(features.image) ? features.image : imageUrl + features.image"
+              alt="features image" class="aspect-[412/412] w-full object-cover" loading="lazy" />
+            <div *ngIf="!features.image"
+              class="w-[412px] h-[412px] flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+              Features Grid Upload Image
+            </div>
+            <div
+              class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+              412 X 412
+            </div>
+          </div>
+          <input type="file" id="features-image-upload" (change)="onFileSelected($event, 'features_image')"
+            accept="image/*" class="hidden" />
+        </label>
+      </div>
+      <div>
+        <p class="text-[20px] font-SfSemiBold">Features PDF</p>
+        <input id="features-pdf" type="file" accept="application/pdf" placeholder="Add Features PDF" pInputText
+          size="small" class="w-full" [(ngModel)]="features.pdf" (change)="onFileSelected($event,'features_pdf')" />
+        @if(!isBase64Pdf(features.pdf)){
+        {{features.pdf}}
+        }@if(features.pdf){
+        <div><app-button (btnClick)="clearData('features')" class="z-10" btnLabel="Clear"></app-button></div>
+        }
+      </div>
+    </div>
+
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="addFeatures()" btnLabel="Add Features"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Add Hcp Press" class="addpeople" [modal]="true" [(visible)]="isHcpPressVisible"
+    [style]="{ width: '70rem'}" draggable="false" (onHide)="clearhcpPressData()">
+    <div class="flex flex-col justify-between z-0">
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Hcp Press Year</p>
+        <p-calendar [readonlyInput]="true" [(ngModel)]="hcp_press.year" view="year" dateFormat="yy"
+          (onSelect)="onYearSelect($event,'hcp_press')" styleClass="w-full">
+        </p-calendar>
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Hcp Press Title</p>
+        <input id="hcp-press-title" type="text" placeholder="Add Hcp Press Title" pInputText size="small" class="w-full"
+          [(ngModel)]="hcp_press.title" />
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Hcp Press Description</p>
+        <textarea id="gap-description" rows="5" cols="10" placeholder="Add Hcp Press Description" class="w-full border"
+          [(ngModel)]="hcp_press.description"></textarea>
+        <div> <app-button (btnClick)="AddParaGap()" class="z-10" btnLabel="Add Paragraph Gap"></app-button></div>
+      </div>
+      <div class="flex items-start mb-3">
+        <label for="hcp_press-image-upload" class="cursor-pointer">
+          <div class="relative group">
+            <img *ngIf="hcp_press.image"
+              [src]="isBase64(hcp_press.image) ? hcp_press.image : imageUrl + hcp_press.image" alt="hcp_press image"
+              class="aspect-[412/412] w-full object-cover" loading="lazy" />
+            <div *ngIf="!hcp_press.image"
+              class="w-[412px] h-[412px] flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+              Hcp Press Grid Upload Image
+            </div>
+            <div
+              class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+              412 X 412
+            </div>
+          </div>
+          <input type="file" id="hcp_press-image-upload" (change)="onFileSelected($event, 'hcp_press_image')"
+            accept="image/*" class="hidden" />
+        </label>
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Hcp Press Link</p>
+        <input id="hcp_press-link" type="link" accept="" placeholder="Add Hcp Press Link" pInputText size="small"
+          class="w-full" [(ngModel)]="hcp_press.link" />
+      </div>
+    </div>
+
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="addHcpPress()" btnLabel="Add Hcp Press"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Add Talk And Seminar" class="addpeople" [modal]="true" [(visible)]="isTalkSeminarVisible"
+    [style]="{ width: '70rem'}" draggable="false" (onHide)="clearTalkAndSeminarData()">
+    <div class="flex flex-col justify-between z-0">
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Talk And Seminar Year</p>
+        <p-calendar [readonlyInput]="true" [(ngModel)]="talkSeminar.year" view="year" dateFormat="yy"
+          (onSelect)="onYearSelect($event,'talkSeminar')" styleClass="w-full">
+        </p-calendar>
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Talk And Seminar Title</p>
+        <input id="talkSeminar-title" type="text" placeholder="Add Talk And Seminar Title" pInputText size="small"
+          class="w-full" [(ngModel)]="talkSeminar.title" />
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Talk And Seminar Description</p>
+        <textarea id="gap-description" rows="5" cols="10" placeholder="Add Talk And Seminar Description"
+          class="w-full border" [(ngModel)]="talkSeminar.description"></textarea>
+        <div> <app-button (btnClick)="AddParaGap()" class="z-10" btnLabel="Add Paragraph Gap"></app-button></div>
+      </div>
+      <div class="flex items-start mb-3">
+        <label for="talkSeminar-image-upload" class="cursor-pointer">
+          <div class="relative group">
+            <img *ngIf="talkSeminar.image"
+              [src]="isBase64(talkSeminar.image) ? talkSeminar.image : imageUrl + talkSeminar.image"
+              alt="talkSeminar image" class="aspect-[557/313] w-full object-cover" loading="lazy" />
+            <div *ngIf="!talkSeminar.image"
+              class="w-[557px] h-[313px] flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+              Talk And Seminar Grid Upload Image
+            </div>
+            <div
+              class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+              557 X 313
+            </div>
+          </div>
+          <input type="file" id="talkSeminar-image-upload" (change)="onFileSelected($event, 'talkSeminar_image')"
+            accept="image/*" class="hidden" />
+        </label>
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Talk And Seminar Link</p>
+        <input id="talkSeminar-link" type="link" accept="" placeholder="Add Talk And Seminar Link" pInputText
+          size="small" class="w-full" [(ngModel)]="talkSeminar.link" />
+      </div>
+    </div>
+
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="addTalkSeminar()" btnLabel="Add Talk Seminar"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Add Award" class="addpeople" [modal]="true" [(visible)]="isAwardVisible" [style]="{ width: '70rem'}"
+    draggable="false" (onHide)="clearAwardData()">
+    <div class="flex flex-col justify-between z-0">
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Awards Year</p>
+        <p-calendar [readonlyInput]="true" [(ngModel)]="awards.year" view="year" dateFormat="yy"
+          (onSelect)="onYearSelect($event,'awards')" styleClass="w-full">
+        </p-calendar>
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Award Title</p>
+        <input id="award-title" type="text" placeholder="Add Award Title" pInputText size="small" class="w-full"
+          [(ngModel)]="awards.title" />
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Award Description</p>
+        <textarea id="gap-description" rows="5" cols="10" placeholder="Add Award Description" class="w-full border"
+          [(ngModel)]="awards.description"></textarea>
+        <div> <app-button (btnClick)="AddParaGap()" class="z-10" btnLabel="Add Paragraph Gap"></app-button></div>
+      </div>
+      <div class="flex items-start">
+        <label for="award-image-upload" class="cursor-pointer">
+          <div class="relative group">
+            <img *ngIf="awards.image" [src]="isBase64(awards.image) ? awards.image : imageUrl + awards.image"
+              alt="award image" class="aspect-[412/412] w-full object-cover" loading="lazy" />
+            <div *ngIf="!awards.image"
+              class="w-[412px] h-[412px] flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+              Award Grid Upload Image
+            </div>
+            <div
+              class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+              412 X 412
+            </div>
+          </div>
+          <input type="file" id="award-image-upload" (change)="onFileSelected($event, 'award_image')" accept="image/*"
+            class="hidden" />
+        </label>
+      </div>
+    </div>
+
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="addAward()" btnLabel="Add Award"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Add Book" class="addpeople" [modal]="true" [(visible)]="isBooksVisible" [style]="{ width: '70rem'}"
+    draggable="false" (onHide)="clearBookdData()">
+    <div class="flex flex-col justify-between z-0">
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Book Year</p>
+        <p-calendar [readonlyInput]="true" [(ngModel)]="book.year" view="year" dateFormat="yy"
+          (onSelect)="onYearSelect($event,'book')" styleClass="w-full">
+        </p-calendar>
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Book Title</p>
+        <input id="book-title" type="text" placeholder="Add Book Title" pInputText size="small" class="w-full"
+          [(ngModel)]="book.title" />
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Book Description</p>
+        <textarea id="gap-description" rows="5" cols="10" placeholder="Add Book Description" class="w-full border"
+          [(ngModel)]="book.description"></textarea>
+        <div> <app-button (btnClick)="AddParaGap()" class="z-10" btnLabel="Add Paragraph Gap"></app-button></div>
+      </div>
+      <div class="flex items-start">
+        <label for="book-image-upload" class="cursor-pointer">
+          <div class="relative group">
+            <img *ngIf="book.image" [src]="isBase64(book.image) ? book.image : imageUrl + book.image" alt="book image"
+              class="aspect-[412/412] w-full object-cover" loading="lazy" />
+            <div *ngIf="!book.image"
+              class="w-[412px] h-[412px] flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+              Book Grid Upload Image
+            </div>
+            <div
+              class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+              412 X 412
+            </div>
+          </div>
+          <input type="file" id="book-image-upload" (change)="onFileSelected($event, 'book_image')" accept="image/*"
+            class="hidden" />
+        </label>
+      </div>
+    </div>
+
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="addBook()" btnLabel="Add Book"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Add  Brochures" class="addpeople" [modal]="true" [(visible)]="isBrochuresVisible"
+    [style]="{ width: '70rem'}" draggable="false" (onHide)="clearBrochuresData()">
+    <div class="flex flex-col justify-between z-0">
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Brochures Year</p>
+        <p-calendar [readonlyInput]="true" [(ngModel)]="brochures.year" view="year" dateFormat="yy"
+          (onSelect)="onYearSelect($event,'brochures')" styleClass="w-full">
+        </p-calendar>
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Brochures Title</p>
+        <input id="brochures-title" type="text" placeholder="Add Brochures Title" pInputText size="small" class="w-full"
+          [(ngModel)]="brochures.title" />
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Brochures Description</p>
+        <textarea id="gap-description" rows="5" cols="10" placeholder="Add Brochures Description" class="w-full border"
+          [(ngModel)]="brochures.description"></textarea>
+        <div> <app-button (btnClick)="AddParaGap()" class="z-10" btnLabel="Add Paragraph Gap"></app-button></div>
+      </div>
+      <div class="flex items-start mb-3">
+        <label for="brochures-image-upload" class="cursor-pointer">
+          <div class="relative group">
+            <img *ngIf="brochures.grid_image"
+              [src]="isBase64(brochures.grid_image) ? brochures.grid_image : imageUrl + brochures.grid_image"
+              alt="brochures image" class="aspect-[557/313] w-full object-cover" loading="lazy" />
+            <div *ngIf="!brochures.grid_image"
+              class="w-[557px] h-[313px] flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+              Brochures Grid Upload Image
+            </div>
+            <div
+              class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+              557 X 313
+            </div>
+          </div>
+          <input type="file" id="brochures-image-upload" (change)="onFileSelected($event,'brochures_image')"
+            accept="image/*" class="hidden" />
+        </label>
+      </div>
+      <div class="flex items-start">
+        <label for="brochures-details-image-upload" class="cursor-pointer">
+          <div class="relative group">
+            <img *ngIf="brochures.image"
+              [src]="isBase64(brochures.image) ? brochures.image : imageUrl + brochures.image"
+              alt="brochures details image" class="aspect-[557/313] w-full object-cover" loading="lazy" />
+            <div *ngIf="!brochures.image"
+              class="w-[557px] h-[313px] flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+              Brochures Details Upload Image
+            </div>
+            <div
+              class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+              1920 X h-full
+            </div>
+          </div>
+          <input type="file" id="brochures-details-image-upload"
+            (change)="onFileSelected($event,'brochures_details_image')" accept="image/*" class="hidden" />
+        </label>
+      </div>
+      <div>
+        <p class="text-[20px] font-SfSemiBold">Brochures PDF</p>
+        <input id="brochures-pdf" type="file" accept="application/pdf" placeholder="Add Brochures PDF" pInputText
+          size="small" class="w-full" [(ngModel)]="brochures.pdf" (change)="onFileSelected($event,'brochures_pdf')" />
+        @if(!isBase64Pdf(brochures.pdf)){
+        {{brochures.pdf}}
+        }@if(brochures.pdf){
+        <div><app-button (btnClick)="clearData('brochures')" class="z-10" btnLabel="Clear"></app-button></div>
+        }
+      </div>
+    </div>
+
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="addBrochures()" btnLabel="Add Brochures"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Add Paper" class="addpeople" [modal]="true" [(visible)]="ispaperVisible" [style]="{ width: '70rem'}"
+    draggable="false" (onHide)="clearPaperData()">
+    <div class="flex flex-col justify-between z-0">
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Paper Year</p>
+        <p-calendar [readonlyInput]="true" [(ngModel)]="paper.year" view="year" dateFormat="yy"
+          (onSelect)="onYearSelect($event,'paper')" styleClass="w-full">
+        </p-calendar>
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Paper Title</p>
+        <input id="Paper-title" type="text" placeholder="Add Paper Title" pInputText size="small" class="w-full"
+          [(ngModel)]="paper.title" />
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Paper Description</p>
+        <textarea id="gap-description" rows="5" cols="10" placeholder="Add Paper Description" class="w-full border"
+          [(ngModel)]="paper.description"></textarea>
+        <div> <app-button (btnClick)="AddParaGap()" class="z-10" btnLabel="Add Paragraph Gap"></app-button></div>
+      </div>
+      <div class="flex items-start">
+        <label for="paper-image-upload" class="cursor-pointer">
+          <div class="relative group">
+            <img *ngIf="paper.image" [src]="isBase64(paper.image) ? paper.image : imageUrl + paper.image"
+              alt="paper image" class="aspect-[412/412] w-full object-cover" loading="lazy" />
+            <div *ngIf="!paper.image"
+              class="w-[412px] h-[412px] flex items-center border-[2px] border-dashed justify-center font-SfRegular text-[20px] text-gray-500">
+              Paper Grid Upload Image
+            </div>
+            <div
+              class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-50 text-[50px] font-bold bg-black bg-opacity-25">
+              412 X 412
+            </div>
+          </div>
+          <input type="file" id="paper-image-upload" (change)="onFileSelected($event,'paper_image')" accept="image/*"
+            class="hidden" />
+        </label>
+      </div>
+      <div>
+        <p class="text-[20px] font-SfSemiBold">Paper PDF</p>
+        <input id="paper-pdf" type="file" accept="application/pdf" placeholder="Add Paper PDF" pInputText size="small"
+          class="w-full" [(ngModel)]="paper.pdf" (change)="onFileSelected($event,'paper_pdf')" />
+        @if(!isBase64Pdf(paper.pdf)){
+        {{paper.pdf}}
+        }@if(paper.pdf){
+        <div><app-button (btnClick)="clearData('paper')" class="z-10" btnLabel="Clear"></app-button></div>
+        }
+      </div>
+    </div>
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="addPaper()" btnLabel="Add Paper"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Add Studen Internship" class="addpeople" [modal]="true" [(visible)]="isStuInternVisible"
+    [style]="{ width: '70rem'}" draggable="false" (onHide)="clearstuInternData()">
+    <div class="flex flex-col justify-between z-0">
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Student Internship Title</p>
+        <input id="book-title" type="text" placeholder="Add Student Internship Title" pInputText size="small"
+          class="w-full" [(ngModel)]="internship.title" />
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Student Internship Description</p>
+        <textarea id="gap-description" rows="5" cols="10" placeholder="Add Student Internship Description"
+          class="w-full border" [(ngModel)]="internship.description"></textarea>
+        <div class="flex gap-2">
+          <app-button (btnClick)="AddLink('intern')" class="z-10" btnLabel="Add Link"></app-button>
+          <app-button (btnClick)="AddParaGap()" class="z-10" btnLabel="Add Para Gap"></app-button>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="addStudentInternship()" btnLabel="Add Student Internship"></app-button>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Add Work Opportunities" class="addpeople" [modal]="true" [(visible)]="isworkOppVisible"
+    [style]="{ width: '70rem'}" draggable="false" (onHide)="clearworkOppData()">
+    <div class="flex flex-col justify-between z-0">
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Job Location</p>
+        <input id="job_location" type="text" placeholder="Add Job Location" pInputText size="small" class="w-full"
+          [(ngModel)]="workoppdata.job_location" />
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Job Role</p>
+        <input id="job_role" type="text" placeholder="Add Job Role" pInputText size="small" class="w-full"
+          [(ngModel)]="workoppdata.job_role" />
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Job Description</p>
+        <textarea id="gap-description" rows="2" cols="5" placeholder="Add Job Description" class="w-full border"
+          [(ngModel)]="workoppdata.job_description"></textarea>
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Studio Name</p>
+        <input id="studio_name" type="text" placeholder="Add Studio Name" pInputText size="small" class="w-full"
+          [(ngModel)]="workoppdata.studio_name" />
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Position Summary</p>
+        <textarea id="gap-description" rows="2" cols="5" placeholder="Add Position Summary" class="w-full border"
+          [(ngModel)]="workoppdata.position_summary"></textarea>
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Responsibilities</p>
+        <textarea rows="2" cols="5" placeholder="Add Responsibilities" class="w-full border"
+          [(ngModel)]="workoppdata.responsibilities"></textarea>
+        <div class="flex gap-2">
+          <app-button (btnClick)="AddComma('responsibilities')" class="z-10"
+            btnLabel="Add Array Separated Comma"></app-button>
+        </div>
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Education</p>
+        <textarea id="gap-description" rows="2" cols="5" placeholder="Add Education" class="w-full border"
+          [(ngModel)]="workoppdata.education"></textarea>
+        <div class="flex gap-2">
+          <app-button (btnClick)="AddComma('education')" class="z-10" btnLabel="Add Array Separated Comma"></app-button>
+        </div>
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Experience</p>
+        <textarea id="gap-description" rows="2" cols="5" placeholder="Add Experience" class="w-full border"
+          [(ngModel)]="workoppdata.experience"></textarea>
+        <div class="flex gap-2">
+          <app-button (btnClick)="AddComma('experience')" class="z-10"
+            btnLabel="Add Array Separated Comma"></app-button>
+        </div>
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Skills Mandatory</p>
+        <textarea id="gap-description" rows="2" cols="5" placeholder="Add Skills Mandatory" class="w-full border"
+          [(ngModel)]="workoppdata.skills_mandatory"></textarea>
+        <div class="flex gap-2">
+          <app-button (btnClick)="AddComma('skills_mandatory')" class="z-10"
+            btnLabel="Add Array Separated Comma"></app-button>
+        </div>
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Skills Perferred</p>
+        <textarea id="gap-description" rows="2" cols="5" placeholder="Add Skills Perferred" class="w-full border"
+          [(ngModel)]="workoppdata.skills_perferred"></textarea>
+        <div class="flex gap-2">
+          <app-button (btnClick)="AddComma('skills_perferred')" class="z-10"
+            btnLabel="Add Array Separated Comma"></app-button>
+        </div>
+      </div>
+      <div class="mb-3">
+        <p class="text-[20px] font-SfSemiBold">Knowledge</p>
+        <textarea id="gap-description" rows="2" cols="5" placeholder="Add Knowledge" class="w-full border"
+          [(ngModel)]="workoppdata.knowledge"></textarea>
+        <div class="flex gap-2">
+          <app-button (btnClick)="AddComma('knowledge')" class="z-10" btnLabel="Add Array Separated Comma"></app-button>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex mt-4 justify-end items-center">
+      <app-button (btnClick)="addWorkOpp()" btnLabel="Add Work Opportunities"></app-button>
+    </div>
+  </p-dialog>
+
+  <router-outlet></router-outlet>
+</div>
