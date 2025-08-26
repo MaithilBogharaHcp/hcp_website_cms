@@ -16,6 +16,7 @@ export interface ITreeBackend {
   urban: [{ project_id: number; ur_project_name: string }];
   early: [{ project_id: number; ur_project_name: string }];
   rp_books: [{ id: number; name: string }];
+  rp_books_publication: [{ id: number; name: string }];
   rp_brochures: [{ id: number; name: string }];
   rp_papers: [{ id: number; name: string }];
   people: [{ people_id: number; name: string }];
@@ -140,6 +141,15 @@ export class TreeDropdownService {
               size: '',
               type: 'ADD',
               project: 'books',
+            },
+            children: [],
+          },
+          {
+            data: {
+              name: 'Books Publication',
+              size: '',
+              type: 'ADD',
+              project: 'bookspublication',
             },
             children: [],
           },
@@ -580,8 +590,20 @@ export class TreeDropdownService {
               },
             });
           });
+          data.data.rp_books_publication.forEach((books_publication: any) => {
+            tree_data[4].children[3].children.push({
+              data: {
+                name: books_publication.name,
+                type: 'EDIT',
+                project_id: books_publication.id,
+                size: '',
+                project_type: 'books_publication',
+                // url: `/books/${books_publication.id}`,
+              },
+            });
+          });
           data.data.rp_brochures.forEach((rp_brochures: any) => {
-            tree_data[4].children[4].children.push({
+            tree_data[4].children[5].children.push({
               data: {
                 name: rp_brochures.name,
                 type: 'EDIT',
@@ -592,7 +614,7 @@ export class TreeDropdownService {
             });
           });
           data.data.rp_papers.forEach((rp_papers: any) => {
-            tree_data[4].children[6].children.push({
+            tree_data[4].children[7].children.push({
               data: {
                 name: rp_papers.name,
                 type: 'EDIT',
